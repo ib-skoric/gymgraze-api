@@ -9,9 +9,6 @@ class AuthenticationController < ApplicationController
     # check that the request includes username + password
     user_params
 
-    # look up the user
-    user = User.find_by(username: params[:username])
-
     raise AuthenticationError unless user.authenticate(params[:password])
 
     # generate token using authentication service
@@ -22,6 +19,10 @@ class AuthenticationController < ApplicationController
   end
 
   private
+
+  def user
+    @user ||= User.find_by(username: params[:username])
+  end
 
   # method for strong params when sending user info
   def user_params
