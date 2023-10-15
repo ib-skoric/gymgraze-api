@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe Goal, type: :model do
-  describe "validations" do
+  let(:user) { FactoryBot.create(:user) }
+
+  describe "validations of attribute presence" do
     it "should validate presence of steps" do
       no_steps_goal = Goal.new(steps: nil)
 
@@ -29,5 +31,28 @@ describe Goal, type: :model do
       expect(no_user_goal).to_not be_valid
       expect(no_user_goal.errors[:user]).to include("must exist")
     end
+  end
+
+  describe "validates correct type of attributes (integer)" do
+    it "should return an error if steps is not an integer" do
+      goal = Goal.new(steps: "abc", kcal: 1000, exercise: 30, user: user)
+
+      expect(goal).to_not be_valid
+      expect(goal.errors[:steps]).to include("is not a number")
     end
+
+    it "should return an error if kcal is not an integer" do
+      goal = Goal.new(steps: 10000, kcal: "abc", exercise: 30, user: user)
+
+      expect(goal).to_not be_valid
+      expect(goal.errors[:kcal]).to include("is not a number")
+    end
+
+    it "should return an error if exercise is not an integer" do
+      goal = Goal.new(steps: 10000, kcal: 1000, exercise: "abc", user: user)
+
+      expect(goal).to_not be_valid
+      expect(goal.errors[:exercise]).to include("is not a number")
+    end
+  end
 end
