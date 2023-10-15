@@ -4,8 +4,14 @@ require 'spec_helper'
 describe AuthenticationService do
   describe ".call" do
     it "should return an authentication token when called with valid credentials" do
-      expect(described_class.call).to eq("abc123")
-    end
+      hmac_secret = "my$ecretK3y"
+      token = described_class.call
+      decoded_token = JWT.decode token, hmac_secret, true, { algorithm: 'HS256' }
 
+      expect(decoded_token).to eq([
+                                    { "test" => "test123" },
+                                    { "alg" => "HS256" }
+                                  ])
+    end
   end
 end
