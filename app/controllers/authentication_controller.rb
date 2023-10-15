@@ -12,7 +12,7 @@ class AuthenticationController < ApplicationController
     raise AuthenticationError unless user.authenticate(params[:password])
 
     # generate token using authentication service
-    token = AuthenticationService.call(user.id)
+    token = AuthenticationService.encode(user.id)
 
     # return token
     render json: { token: token }, status: :created
