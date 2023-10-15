@@ -31,5 +31,11 @@ describe AuthenticationController, type: :controller do
         "error" => "param is missing or the value is empty: password"
       })
     end
+
+    it "validates the current password is correct for the user" do
+      post 'create', params: { username: user.username, password: 'wrongpassword'}
+
+      expect(response).to have_http_status(:unauthorized)
     end
+  end
   end
