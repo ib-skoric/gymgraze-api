@@ -1,5 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Meal, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Meal, type: :model do
+  let(:user) { FactoryBot.create(:user) }
+
+  describe 'validates presence of attributes' do
+    it "should have a title" do
+      meal = Meal.create(name: nil, user: user)
+
+      expect(meal).to_not be_valid
+      expect(meal.errors[:name]).to include("can't be blank")
+    end
+  end
 end
