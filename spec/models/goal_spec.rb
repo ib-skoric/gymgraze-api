@@ -55,4 +55,27 @@ describe Goal, type: :model do
       expect(goal.errors[:exercise]).to include("is not a number")
     end
   end
+
+  describe "validates integer is 0 or greater" do
+    it "should return an error if steps is less than 0" do
+      goal = Goal.new(steps: -1, kcal: 1000, exercise: 30, user: user)
+
+      expect(goal).to_not be_valid
+      expect(goal.errors[:steps]).to include("must be greater than or equal to 0")
+    end
+
+    it "should return an error if kcal is less than 0" do
+      goal = Goal.new(steps: 10000, kcal: -1, exercise: 30, user: user)
+
+      expect(goal).to_not be_valid
+      expect(goal.errors[:kcal]).to include("must be greater than or equal to 0")
+    end
+
+    it "should return an error if exercise is less than 0" do
+      goal = Goal.new(steps: 10000, kcal: 1000, exercise: -1, user: user)
+
+      expect(goal).to_not be_valid
+      expect(goal.errors[:exercise]).to include("must be greater than or equal to 0")
+    end
+  end
 end
