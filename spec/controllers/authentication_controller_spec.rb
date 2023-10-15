@@ -3,12 +3,14 @@ require 'spec_helper'
 
 describe AuthenticationController, type: :controller do
   describe "POST to /authenticate endpoint" do
+    let (:user) { FactoryBot.create(:user) }
+
     it "will authenticate the user" do
-      post 'create', params: { username: 'john.doe', password: 'test' }
+      post 'create', params: { username: user.username, password: user.password }
 
       expect(response).to have_http_status(:created)
       expect(JSON.parse(response.body)).to eq({
-        "token" => 'abc123'
+        "token" => 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.37znViEM3edi-7j_eUifNbjuIaljfOs0FqpY87oGCf0'
       })
     end
 
@@ -29,6 +31,5 @@ describe AuthenticationController, type: :controller do
         "error" => "param is missing or the value is empty: password"
       })
     end
+    end
   end
-
-end

@@ -3,7 +3,10 @@ class AuthenticationController < ApplicationController
   def create
     user_params
 
-    render json: { token: 'abc123' }, status: :created
+    user = User.find_by(username: params.require(:username))
+    token = AuthenticationService.call(user.id)
+
+    render json: { token: token }, status: :created
   end
 
   private
