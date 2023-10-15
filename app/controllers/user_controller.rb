@@ -5,7 +5,7 @@ class UserController < ApplicationController
   before_action :authenticate_user
 
   def index
-    render json: { user_id: @user.id }
+    render json: @user, serializer: UserSerializer
   end
 
   private
