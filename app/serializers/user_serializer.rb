@@ -5,5 +5,5 @@ class UserSerializer < ActiveModel::Serializer
 
   # ------------ RELATIONSHIPS ------------
   has_one :goal
-  has_many :meals
+  has_many :meals, serializer: MealSerializer
 end
