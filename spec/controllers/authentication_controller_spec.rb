@@ -6,7 +6,21 @@ describe AuthenticationController, type: :controller do
       post 'create', params: { username: 'john.doe', password: 'test' }
 
       expect(response).to have_http_status(:created)
-      expect(response.body).to eq("")
+      expect(response.body).to eq({
+        "token" => '123'
+      })
+    end
+
+    it "checks if username is missing and returns an error" do
+      post 'create', params: { password: 'test'}
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "checks if password is missing and returns an error" do
+      post 'create', params: { username: ''}
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
