@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   post '/authenticate', to: 'authentication#create'
+  resources :users, only: [:show]
 end
