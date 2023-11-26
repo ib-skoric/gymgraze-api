@@ -1,7 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
 
   # ------------ ATTRIBUTES ------------
-  attributes :id
+  attributes :id, :username
 
   # ------------ RELATIONSHIPS ------------
   has_one :goal
