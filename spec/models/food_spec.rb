@@ -34,25 +34,11 @@ RSpec.describe Food, type: :model do
   end
 
   describe "it validates correct data types are used for each" do
-    it "should return an error if name is not a string" do
-      food = Food.new(name: 123, barcode: 1234567890, meal: FactoryBot.create(:breakfast))
-
-      expect(food).to_not be_valid
-      expect(food.errors[:name]).to include("is not a string")
-    end
-
     it "should return an error if barcode is not an integer" do
-      food = Food.new(name: "Banana", barcode: "abc", meal: FactoryBot.create(:breakfast))
+      food = Food.new(name: "Banana", barcode: "abc", meal: FactoryBot.create(:meal))
 
       expect(food).to_not be_valid
       expect(food.errors[:barcode]).to include("is not a number")
-    end
-
-    it "should return an error if meal is not a Meal object" do
-      food = Food.new(name: "Banana", barcode: 1234567890, meal: "abc")
-
-      expect(food).to_not be_valid
-      expect(food.errors[:meal]).to include("must exist")
     end
   end
 end

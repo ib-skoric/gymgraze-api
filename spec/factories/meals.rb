@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :breakfast do
+  factory :meal do
     name { "Breakfast" }
-    user { User.find_by(id: 1) }
+    user { FactoryBot.create(:user) }
   end
 end
