@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :meal do
-    name { "MyString" }
-    user { nil }
+    name { "Breakfast" }
+    user { FactoryBot.create(:user) }
   end
 end
