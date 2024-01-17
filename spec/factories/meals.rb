@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :meal do
-    name { "MyString" }
-    user { nil }
+  factory :breakfast do
+    name { "Breakfast" }
+    user { User.find_by(id: 1) }
   end
 end
