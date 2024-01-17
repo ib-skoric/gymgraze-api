@@ -5,4 +5,5 @@ class Meal < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS --------------- #
   belongs_to :user
+  has_many :foods
 end

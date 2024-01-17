@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS --------------- #
   has_one :goal
-  has_many :meals
+  has_one :food_diary
+
 end
