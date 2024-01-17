@@ -1,3 +1,3 @@
-xclass FoodSerializerSerializer < ActiveModel::Serializer
+class FoodSerializerSerializer < ActiveModel::Serializer
   attributes :id
 end
