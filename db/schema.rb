@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_082345) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_17_203002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +20,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_082345) do
     t.bigint "meal_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "nutritional_info_id", null: false
     t.index ["meal_id"], name: "index_foods_on_meal_id"
+    t.index ["nutritional_info_id"], name: "index_foods_on_nutritional_info_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -41,6 +43,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_082345) do
     t.index ["user_id"], name: "index_meals_on_user_id"
   end
 
+  create_table "nutritional_infos", force: :cascade do |t|
+    t.decimal "kcal"
+    t.decimal "carbs"
+    t.decimal "fat"
+    t.decimal "protein"
+    t.decimal "salt"
+    t.decimal "sugar"
+    t.decimal "fiber"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "food_id", null: false
+    t.index ["food_id"], name: "index_nutritional_infos_on_food_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password"
@@ -50,6 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_082345) do
   end
 
   add_foreign_key "foods", "meals"
+  add_foreign_key "foods", "nutritional_infos"
   add_foreign_key "goals", "users"
   add_foreign_key "meals", "users"
+  add_foreign_key "nutritional_infos", "foods"
 end

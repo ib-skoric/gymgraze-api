@@ -5,4 +5,5 @@ class Food < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS --------------- #
   belongs_to :meal
+  has_one :nutritional_info
 end
