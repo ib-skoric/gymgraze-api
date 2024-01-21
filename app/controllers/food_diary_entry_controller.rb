@@ -13,12 +13,15 @@ class FoodDiaryEntryController < ApplicationController
   end
 
   def create
-  end
+    diary_entry = FoodDiaryEntry.new(diary_entry_params)
 
-  def update
-  end
+    diary_entry.user_id = @user.id
 
-  def destroy
+    if diary_entry.save
+      render json: diary_entry, status: :created
+    else
+      render json: diary_entry.errors, status: :unprocessable_entity
+    end
   end
 
   private

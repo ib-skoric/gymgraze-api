@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get 'food_diary_entry/index'
-  get 'food_diary_entry/show'
-  get 'food_diary_entry/create'
-  get 'food_diary_entry/update'
-  get 'food_diary_entry/destroy'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
