@@ -5,7 +5,7 @@ class FoodDiaryEntryController < ApplicationController
   before_action :authenticate_user
 
   def index
-    render json: FoodDiaryEntry.where(user_id: @user.id), each_serializer: FoodDiaryEntrySerializer
+    render json: FoodDiaryEntry.includes(foods: :nutritional_info).where(user_id: @user.id), include: ['foods.nutritional_info']
   end
 
   def show
