@@ -1,5 +1,5 @@
 class FoodDiaryEntrySerializer < ActiveModel::Serializer
-  attributes :id, :date, :created_at, :updated_at
+  attributes :id, :date
 
   # ------------ RELATIONSHIPS ------------
   # return every food diary entry's food object

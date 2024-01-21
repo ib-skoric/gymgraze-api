@@ -9,6 +9,7 @@ class FoodDiaryEntryController < ApplicationController
   end
 
   def show
+    render json: FoodDiaryEntry.includes(foods: :nutritional_info).find(params[:id]), include: ['foods.nutritional_info']
   end
 
   def create
@@ -18,6 +19,12 @@ class FoodDiaryEntryController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def diary_entry_params
+    params.require(:food_diary_entry).permit(:date)
   end
 
 end
