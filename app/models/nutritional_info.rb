@@ -4,5 +4,4 @@ class NutritionalInfo < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS --------------- #
   belongs_to :food
-  has_one :food
 end

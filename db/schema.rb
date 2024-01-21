@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_203002) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_21_155555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "food_diaries", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_food_diaries_on_user_id"
+  end
+
+  create_table "food_diary_entries", force: :cascade do |t|
+    t.date "date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_food_diary_entries_on_user_id"
+  end
 
   create_table "foods", force: :cascade do |t|
     t.string "name"
@@ -20,9 +35,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_203002) do
     t.bigint "meal_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "nutritional_info_id", null: false
+    t.bigint "food_diary_entry_id"
+    t.index ["food_diary_entry_id"], name: "index_foods_on_food_diary_entry_id"
     t.index ["meal_id"], name: "index_foods_on_meal_id"
-    t.index ["nutritional_info_id"], name: "index_foods_on_nutritional_info_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -65,8 +80,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_203002) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "food_diaries", "users"
+  add_foreign_key "food_diary_entries", "users"
+  add_foreign_key "foods", "food_diary_entries"
   add_foreign_key "foods", "meals"
-  add_foreign_key "foods", "nutritional_infos"
   add_foreign_key "goals", "users"
   add_foreign_key "meals", "users"
   add_foreign_key "nutritional_infos", "foods"

@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   post '/authenticate', to: 'authentication#create'
   resources :user, only: [:show]
   resources :user, only: [:index]
+
+  resources :food_diary_entry, only: [:index, :show, :create, :update, :destroy]
 end
