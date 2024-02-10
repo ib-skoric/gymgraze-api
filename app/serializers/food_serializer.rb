@@ -1,4 +1,4 @@
-class FoodSerializer < ActiveModel::Serializer
+class FoodSerializer < ActiveModel::Serializer™
   attributes :id, :name
 
   # ------------ RELATIONSHIPS ------------
