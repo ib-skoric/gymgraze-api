@@ -8,9 +8,10 @@ describe AuthenticationController, type: :controller do
     it "will authenticate the user" do
       post 'create', params: { email: user.email, password: user.password }
 
-      expect(response).to have_http_status(:created)
+      expect(response).to have_http_status(:ok)
+      token = AuthenticationService.encode(user.id)
       expect(JSON.parse(response.body)).to eq({
-        "token" => 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.37znViEM3edi-7j_eUifNbjuIaljfOs0FqpY87oGCf0'
+        "token" => token
       })
     end
 

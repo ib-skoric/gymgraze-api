@@ -15,7 +15,7 @@ class AuthenticationController < ApplicationController
     token = AuthenticationService.encode(user.id)
 
     # return token
-    render json: { token: token }, status: :created
+    render json: { token: token }, status: :ok
   end
 
   private
