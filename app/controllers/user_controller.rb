@@ -2,8 +2,8 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
+  before_action :authenticate_user, only: [:index]
   def index
-    before_action :authenticate_user
 
     render json: @user, serializer: UserSerializer
   end
@@ -20,6 +20,6 @@ class UserController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :name, :age, :weight)
+    params.require(:user).permit(:email, :password, :name, :age, :weight, :height)
   end
 end
