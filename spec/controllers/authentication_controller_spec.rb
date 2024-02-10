@@ -6,25 +6,26 @@ describe AuthenticationController, type: :controller do
     let (:user) { FactoryBot.create(:user) }
 
     it "will authenticate the user" do
-      post 'create', params: { username: user.username, password: user.password }
+      post 'create', params: { email: user.email, password: user.password }
 
-      expect(response).to have_http_status(:created)
+      expect(response).to have_http_status(:ok)
+      token = AuthenticationService.encode(user.id)
       expect(JSON.parse(response.body)).to eq({
-        "token" => 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.37znViEM3edi-7j_eUifNbjuIaljfOs0FqpY87oGCf0'
+        "token" => token
       })
     end
 
-    it "checks if username is missing and returns an error" do
+    it "checks if email is missing and returns an error" do
       post 'create', params: { password: 'test'}
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(JSON.parse(response.body)).to eq({
-        "error" => "param is missing or the value is empty: username"
+        "error" => "param is missing or the value is empty: email"
       })
     end
 
     it "checks if password is missing and returns an error" do
-      post 'create', params: { username: 'abcd'}
+      post 'create', params: { email: 'abcd'}
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(JSON.parse(response.body)).to eq({
@@ -33,7 +34,7 @@ describe AuthenticationController, type: :controller do
     end
 
     it "validates the current password is correct for the user" do
-      post 'create', params: { username: user.username, password: 'wrongpassword'}
+      post 'create', params: { email: user.email, password: 'wrongpassword'}
 
       expect(response).to have_http_status(:unauthorized)
     end

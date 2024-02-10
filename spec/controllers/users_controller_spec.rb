@@ -12,5 +12,13 @@ describe "GET to /users/:id endpoint" do
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq({ user_id: user.id }.to_json)
     end
+end
+
+  describe "POST to /users endpoint" do
+    it "creates a new user" do
+      post 'create', params: { user: { email: "testing", password: "testing2313543435", name: "Tester", age: 35, weight: 80 } }
+
+      expect(response).to have_http_status(:created)
+    end
   end
 end
