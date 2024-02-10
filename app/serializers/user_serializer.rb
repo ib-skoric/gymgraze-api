@@ -1,7 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
 
   # ------------ ATTRIBUTES ------------
-  attributes :id, :username
+  attributes :id, :email, :name, :age, :weight
 
   # ------------ RELATIONSHIPS ------------
   # returns the user's goals object

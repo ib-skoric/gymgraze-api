@@ -6,7 +6,7 @@ class AuthenticationController < ApplicationController
   rescue_from AuthenticationError, with: :unauthorized_request
   rescue_from ActionController::ParameterMissing, with: :param_missing
   def create
-    # check that the request includes username + password
+    # check that the request includes email + password
     user_params
 
     raise AuthenticationError unless user.authenticate(params[:password])
@@ -21,12 +21,12 @@ class AuthenticationController < ApplicationController
   private
 
   def user
-    @user ||= User.find_by(username: params[:username])
+    @user ||= User.find_by(email: params[:email])
   end
 
   # method for strong params when sending user info
   def user_params
-    params.require([:username, :password])
+    params.require([:email, :password])
   end
 
   # method used to raise error when params are missing
