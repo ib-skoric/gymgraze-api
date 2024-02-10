@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2 }
   validates :age, presence: true
   validates :weight, presence: true
+  validates :height, presence: true
 
   # ------------ MODEL ASSOCIATIONS --------------- #
   has_one :goal
