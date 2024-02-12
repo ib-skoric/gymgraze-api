@@ -18,6 +18,16 @@ class UserController < ApplicationController
     end
   end
 
+  def confirm_email
+    @user = User.find_by(confirmation_token: params[:confirmation_token])
+    if @user
+      @user.update(confirmation_token: nil, email_confirmed: true, confirmed_at: Time.now.utc)
+      render json: @user, status: :accepted, serializer: UserSerializer
+    else
+      render json: { error: "Invalid confirmation token" }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user_params
