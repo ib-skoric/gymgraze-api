@@ -24,7 +24,7 @@ class UserController < ApplicationController
       @user.update(confirmation_token: nil, email_confirmed: true, confirmed_at: Time.now.utc)
       render json: @user, status: :accepted, serializer: UserSerializer
     else
-      render json: { error: "Invalid confirmation token" }, status: :unprocessable_entity
+      render json: { error: "Invalid confirmation token" }, status: :unauthorized
     end
   end
 
