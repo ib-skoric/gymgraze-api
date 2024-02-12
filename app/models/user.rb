@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_create :generate_confirmation_token
+
   # ------------ MODEL VALIDATIONS ---------------- #
   has_secure_password
   validates :email, presence: true, uniqueness: true, length: { minimum: 5 }
@@ -11,4 +13,10 @@ class User < ApplicationRecord
   # ------------ MODEL ASSOCIATIONS --------------- #
   has_one :goal
   has_many :meals
+
+  private
+
+  def generate_confirmation_token
+    self.confirmation_token = SecureRandom.urlsafe_base64(15)
+  end
 end
