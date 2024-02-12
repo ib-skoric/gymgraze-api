@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_10_134130) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_12_155645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_10_134130) do
     t.integer "age"
     t.decimal "weight"
     t.integer "height"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.datetime "confirmation_token_expires_at"
   end
 
   add_foreign_key "food_diaries", "users"
