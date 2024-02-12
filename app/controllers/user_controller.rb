@@ -11,6 +11,7 @@ class UserController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UserMailer.confirmation_email(user: @user).deliver_now
       render json: @user, status: :created, serializer: UserRegistrationSerializer
     else
       render json: @user.errors, status: :unprocessable_entity
