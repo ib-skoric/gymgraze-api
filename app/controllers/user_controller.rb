@@ -28,6 +28,18 @@ class UserController < ApplicationController
     end
   end
 
+  def resend_confirmation_email
+    user = User.find_by(email: params[:email])
+
+    if user && user.confirmed_at.nil?
+      user.regenerate_confirmation_token
+      UserMailer.confirmation_email(user: user).deliver_now
+      render json: { message: "Confirmation email resent" }, status: :accepted
+    else
+      render json: { error: "User not found or already confirmed" }, status: :not_found
+    end
+  end
+
   private
 
   def user_params
