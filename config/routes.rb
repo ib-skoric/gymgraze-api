@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :user, only: [:show, :index, :create]
 
   post '/confirm_email', to: 'user#confirm_email'
+  post '/resend_confirmation_email', to: 'user#resend_confirmation_email'
 
   resources :food_diary_entry, only: [:index, :show, :create, :update, :destroy]
 end
