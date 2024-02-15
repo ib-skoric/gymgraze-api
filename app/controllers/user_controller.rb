@@ -2,10 +2,13 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :confirm_email, :resend_confirmation_email]
+  before_action :authenticate_user, only: [:index, :show_profile_details, :confirm_email, :resend_confirmation_email]
   def index
+    render json: @user, serializer: UserSerializer, status: :ok
+  end
 
-    render json: @user, serializer: UserSerializer
+  def profile
+    render json: @user, serializer: UserRegistrationSerializer, status: :ok
   end
 
   def create
