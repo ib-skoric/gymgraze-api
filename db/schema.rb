@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_18_124056) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_18_124626) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -86,7 +86,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_18_124056) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.datetime "confirmation_token_expires_at"
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "food_diaries", "users"
