@@ -28,7 +28,7 @@ class User < ApplicationRecord
     save!
   end
 
-  def is_same_as?(usder)
+  def is_same_as?(user)
     if self.id == user.id
        true
     else

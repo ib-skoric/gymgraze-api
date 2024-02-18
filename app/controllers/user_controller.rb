@@ -23,8 +23,8 @@ class UserController < ApplicationController
   end
 
   def confirm_email
-    @user_by_confirmation_token = User.find_by(confirmation_token: params[:confirmation_token])
-    if @user && @user.confirmation_token_expires_at > Time.now.utc && @user == @user_by_confirmation_token
+    user_by_confirmation_token = User.find_by(confirmation_token: params[:confirmation_token])
+    if @user && @user.confirmation_token_expires_at > Time.now.utc && @user.is_same_as?(user_by_confirmation_token)
       @user.update!(confirmation_token: nil, confirmed_at: Time.now.utc)
       render json: @user, status: :accepted, serializer: UserSerializer
     else
