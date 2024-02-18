@@ -27,4 +27,12 @@ class User < ApplicationRecord
     self.confirmation_sent_at = Time.now.utc
     save!
   end
+
+  def is_same_as?(usder)
+    if self.id == user.id
+       true
+    else
+       false
+    end
+  end
 end
