@@ -2,10 +2,13 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email]
   def index
+    render json: @user, serializer: UserSerializer, status: :ok
+  end
 
-    render json: @user, serializer: UserSerializer
+  def profile
+    render json: @user, serializer: UserRegistrationSerializer, status: :ok
   end
 
   def create
@@ -20,8 +23,8 @@ class UserController < ApplicationController
   end
 
   def confirm_email
-    @user = User.find_by(confirmation_token: params[:confirmation_token])
-    if @user && @user.confirmation_token_expires_at > Time.now.utc
+    user_by_confirmation_token = User.find_by(confirmation_token: params[:confirmation_token])
+    if @user && @user.confirmation_token_expires_at > Time.now.utc && @user.is_same_as?(user_by_confirmation_token)
       @user.update!(confirmation_token: nil, confirmed_at: Time.now.utc)
       render json: @user, status: :accepted, serializer: UserSerializer
     else
