@@ -14,6 +14,14 @@ class User < ApplicationRecord
   has_one :goal
   has_many :meals
 
+  def is_same_as?(user)
+    if self.id == user.id
+      true
+    else
+      false
+    end
+  end
+
   private
 
   def generate_confirmation_token
@@ -26,13 +34,5 @@ class User < ApplicationRecord
     self.confirmation_token_expires_at = Time.now.utc + 1.hours
     self.confirmation_sent_at = Time.now.utc
     save!
-  end
-
-  def is_same_as?(user)
-    if self.id == user.id
-       true
-    else
-       false
-    end
   end
 end
