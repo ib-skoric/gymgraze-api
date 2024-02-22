@@ -1,6 +1,9 @@
-class ExerciseController < ApplicationController
+class ExercisesController < ApplicationController
 
-  def new
+  include ActionController::HttpAuthentication::Token
+  before_action :authenticate_user
+
+  def create
     @exercise = Exercise.new(exercise_params)
 
     if @exercise.save
