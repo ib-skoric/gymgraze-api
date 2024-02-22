@@ -13,5 +13,5 @@ Rails.application.routes.draw do
 
   resources :exercises, only: [:create]
 
-  resources :food_diary_entry, only: [:index, :show, :create, :update, :destroy]
+  resources :food_diary_entries, only: [:index, :show, :create, :update, :destroy]
 end
