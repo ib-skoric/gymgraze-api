@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_22_212200) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_215855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exercise_diary_entries", force: :cascade do |t|
+    t.date "date"
+    t.bigint "user_id", null: false
+    t.integer "calories_burned"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_exercise_diary_entries_on_user_id"
+  end
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
@@ -95,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_212200) do
     t.datetime "confirmation_token_expires_at"
   end
 
+  add_foreign_key "exercise_diary_entries", "users"
   add_foreign_key "food_diaries", "users"
   add_foreign_key "food_diary_entries", "users"
   add_foreign_key "foods", "food_diary_entries"
