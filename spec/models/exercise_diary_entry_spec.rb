@@ -5,7 +5,7 @@ RSpec.describe ExerciseDiaryEntry, type: :model do
     no_date_entry = ExerciseDiaryEntry.create(date: nil)
 
     expect(no_date_entry).to_not be_valid
-    expect(no_date_entry.errors[:name]).to include("can't be blank")
+    expect(no_date_entry.errors[:date]).to include("can't be blank")
   end
 
   it "should validate presence of user_id" do
