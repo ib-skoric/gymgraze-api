@@ -22,8 +22,6 @@ class User < ApplicationRecord
     end
   end
 
-  private
-
   def generate_confirmation_token
     self.confirmation_token = SecureRandom.urlsafe_base64(15)
     self.confirmation_token_expires_at = Time.now.utc + 1.hours
