@@ -1,6 +1,8 @@
 class ExerciseDiaryEntriesController < ApplicationController
   include ActionController::HttpAuthentication::Token
 
+  before_action :authenticate_user
+
   def create
     diary_entry = ExerciseDiaryEntry.new(diary_entry_params)
 
@@ -16,6 +18,6 @@ class ExerciseDiaryEntriesController < ApplicationController
   private
 
   def diary_entry_params
-    params.require(:exercise_diary_entry).permit(:date, :duration, :exercise_id)
+    params.require(:exercise_diary_entry).permit(:date, :calories_burned)
   end
 end
