@@ -2,13 +2,13 @@ require 'rails_helper'
 require 'spec_helper'
 require 'authentication_helper'
 
-RSpec.describe ExerciseDiaryEntriesController, type: :controller do
+RSpec.describe WorkoutDiaryEntriesController, type: :controller do
 
     before(:all) do
       @user = FactoryBot.build(:jane_doe)
     end
 
-    describe "POST /exercise_diary_entries" do
+    describe "POST /workout_diary_entries" do
       it "creates a new exercise diary entry" do
         request.headers.merge!(authentication_helper(@user))
         post "create", params: { exercise_diary_entry: { date: Date.today, calories_burned: 300 } }

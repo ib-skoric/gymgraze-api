@@ -10,20 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_25_113707) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_25_114721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "exercise_diary_entries", force: :cascade do |t|
-    t.date "date"
-    t.bigint "user_id", null: false
-    t.integer "calories_burned"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "exercise_id"
-    t.index ["exercise_id"], name: "index_exercise_diary_entries_on_exercise_id"
-    t.index ["user_id"], name: "index_exercise_diary_entries_on_user_id"
-  end
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
@@ -106,8 +95,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_113707) do
     t.datetime "confirmation_token_expires_at"
   end
 
-  add_foreign_key "exercise_diary_entries", "exercises"
-  add_foreign_key "exercise_diary_entries", "users"
+  create_table "workout_diary_entries", force: :cascade do |t|
+    t.date "date"
+    t.bigint "user_id", null: false
+    t.integer "calories_burned"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "exercise_id"
+    t.index ["exercise_id"], name: "index_workout_diary_entries_on_exercise_id"
+    t.index ["user_id"], name: "index_workout_diary_entries_on_user_id"
+  end
+
   add_foreign_key "food_diaries", "users"
   add_foreign_key "food_diary_entries", "users"
   add_foreign_key "foods", "food_diary_entries"
@@ -115,4 +113,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_113707) do
   add_foreign_key "goals", "users"
   add_foreign_key "meals", "users"
   add_foreign_key "nutritional_infos", "foods"
+  add_foreign_key "workout_diary_entries", "exercises"
+  add_foreign_key "workout_diary_entries", "users"
 end
