@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post '/resend_confirmation_email', to: 'user#resend_confirmation_email'
 
   resources :exercises, only: [:create]
-  resources :exercise_diary_entries, only: [:create, :show]
+  resources :workout_diary_entries, only: [:create, :show]
 
   resources :food_diary_entries, only: [:index, :show, :create, :update, :destroy]
 end
