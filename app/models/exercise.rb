@@ -5,6 +5,6 @@ class Exercise < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS ---------------- #
   belongs_to :user
-  belongs_to :workout
+  belongs_to :workout, optional: true
 
 end
