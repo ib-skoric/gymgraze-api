@@ -2,10 +2,10 @@ require 'rails_helper'
 require 'spec_helper'
 require 'authentication_helper'
 
-describe FoodDiaryEntryController do
+describe FoodDiaryEntriesController do
 
   before(:all) do
-    @user = FactoryBot.create(:jane_doe)
+    @user = FactoryBot.build(:jane_doe)
   end
 
   describe "GET to /food_diary_entries endpoint" do

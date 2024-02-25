@@ -11,5 +11,9 @@ Rails.application.routes.draw do
   post '/confirm_email', to: 'user#confirm_email'
   post '/resend_confirmation_email', to: 'user#resend_confirmation_email'
 
-  resources :food_diary_entry, only: [:index, :show, :create, :update, :destroy]
+  resources :exercises, only: [:create, :show, :index]
+  resources :workout_diary_entries, only: [:create, :show]
+  resources :workouts, only: [:create, :show]
+
+  resources :food_diary_entries, only: [:index, :show, :create, :update, :destroy]
 end

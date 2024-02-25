@@ -1,4 +1,4 @@
-class FoodDiaryEntryController < ApplicationController
+class FoodDiaryEntriesController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
