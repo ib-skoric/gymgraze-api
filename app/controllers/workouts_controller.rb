@@ -1,9 +1,9 @@
-class WorkoutController < ApplicationController
+class WorkoutsController < ApplicationController
   include ActionController::HttpAuthentication::Token
-  before_action :authenticate_use
+  before_action :authenticate_user
 
   def create
-    workout = Workout.new(workout_params.merge(workout_diary_entry_id: @user.id))
+    workout = Workout.new(workout_params)
     if workout.save
       render workout, status: :created, serializer: WorkoutSerializer
     else
@@ -14,6 +14,6 @@ class WorkoutController < ApplicationController
   private
 
   def workout_params
-    params.require(:workout).permit(:date, :workout_diary_entry_id, :calories_burned, :user_id)
+    params.require(:workout).permit(:date, :workout_diary_entry_id, :calories_burned)
   end
 end
