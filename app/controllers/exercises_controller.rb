@@ -7,10 +7,20 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.new(exercise_params.merge(user_id: @user.id))
 
     if @exercise.save
-      render json: @exercise, status: :created
+      render json: @exercise, status: :created, serializer: ExerciseSerializer
     else
       render json: @exercise.errors, status: :unprocessable_entity
     end
+  end
+
+  def show
+    @exercise = Exercise.find(params[:id])
+    render json: @exercise, status: :ok, serializer: ExerciseSerializer
+  end
+
+  def index
+    @exercises = Exercise.where(user_id: @user.id)
+    render json: @exercises, status: :ok, each_serializer: ExerciseSerializer
   end
 
   private
