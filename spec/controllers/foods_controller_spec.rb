@@ -43,7 +43,9 @@ describe FoodsController, type: :controller do
   describe "GET #show" do
     it "should return a food" do
       request.headers.merge!(authentication_helper(@user))
-      food = Food.new(name: "banana", barcode: 123456789)
+      meal = Meal.create(name: "breakfast", user_id: @user.id)
+      food_diary_entry = FoodDiaryEntry.create(date: Date.today, user_id: @user.id)
+      food = Food.create(name: "banana", barcode: 123456789, meal_id: meal.id, food_diary_entry_id: food_diary_entry.id)
       get :show, params: { id: food.id }
 
       expect(response).to have_http_status(:ok)
