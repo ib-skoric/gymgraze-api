@@ -4,7 +4,7 @@ class ExercisesController < ApplicationController
   before_action :authenticate_user
 
   def create
-    @exercise = Exercise.new(exercise_params)
+    @exercise = Exercise.new(exercise_params.merge(user_id: @user.id))
 
     if @exercise.save
       render json: @exercise, status: :created
@@ -16,6 +16,6 @@ class ExercisesController < ApplicationController
   private
 
   def exercise_params
-    params.require(:exercise).permit(:name, :exercise_type)
+    params.require(:exercise).permit(:name, :exercise_type, :workout_id, :calories_burned, :duration, :date, :user_id)
   end
 end

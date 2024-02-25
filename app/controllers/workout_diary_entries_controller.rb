@@ -4,7 +4,7 @@ class WorkoutDiaryEntriesController < ApplicationController
   before_action :authenticate_user
 
   def create
-    diary_entry = ExerciseDiaryEntry.new(diary_entry_params)
+    diary_entry = WorkoutDiaryEntry.new(diary_entry_params)
 
     diary_entry.user_id = @user.id
 
@@ -16,13 +16,13 @@ class WorkoutDiaryEntriesController < ApplicationController
   end
 
   def show
-    diary_entry = ExerciseDiaryEntry.find(params[:id])
+    diary_entry = WorkoutDiaryEntry.find(params[:id])
     render json: diary_entry, status: :ok
   end
 
   private
 
   def diary_entry_params
-    params.require(:exercise_diary_entry).permit(:date, :calories_burned)
+    params.require(:workout_diary_entry).permit(:date)
   end
 end
