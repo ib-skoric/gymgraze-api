@@ -15,6 +15,11 @@ class ExerciseDiaryEntriesController < ApplicationController
     end
   end
 
+  def show
+    diary_entry = ExerciseDiaryEntry.find(params[:id])
+    render json: diary_entry, status: :ok
+  end
+
   private
 
   def diary_entry_params
