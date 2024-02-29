@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :exercise do
     name { "MyString" }
-    type { "" }
+    exercise_type { "strength" }
+    id { 1 }
+    user_id { FactoryBot.create(:jane_doe).id }
   end
 end
