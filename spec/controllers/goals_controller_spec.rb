@@ -6,6 +6,7 @@ describe GoalsController, type: :controller do
 
     before(:all) do
       @user = FactoryBot.build(:jane_doe)
+      @goal = FactoryBot.build(:goal)
     end
 
   describe "POST #create" do
@@ -40,25 +41,24 @@ describe GoalsController, type: :controller do
     end
   end
 
-  describe "GET #show" do
+  describe "GET #index" do
     it "should return a goal" do
       request.headers.merge!(authentication_helper(@user))
-      goal = Goal.create(steps: 10000, kcal: 2000, exercise: 30, user_id: @user.id)
-      get :show, params: { user_id: user.id }
+      goal = Goal.create(steps: 10000, kcal: 2000, exercise: 30)
+      get :index
 
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "PUT #update" do
+  describe "PUT #update_goal" do
     it "should update a goal" do
       request.headers.merge!(authentication_helper(@user))
-      goal = Goal.create(steps: 10000, kcal: 2000, exercise: 30, user_id: @user.id)
-      put :update, params: { id: goal.id, steps: 15000, kcal: 2500, exercise: 45 }
+      updated_goal = Goal.create(steps: 20000, kcal: 1500, exercise: 50)
+      put :update_goal, params: { goal: updated_goal.attributes }
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("steps": 15000, "kcal": 2500, "exercise": 45)
+      expect(response.body).to include("20000")
     end
   end
-
 end

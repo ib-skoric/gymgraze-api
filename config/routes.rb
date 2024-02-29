@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   resources :workouts, only: [:create, :show]
   resources :foods, only: [:create, :show]
   resources :exercise_set, only: [:index, :show, :create]
+  resources :goals, only: [:create, :index]
+
+  put '/update_goal', to: 'goals#update_goal'
 
   resources :food_diary_entries, only: [:index, :show, :create, :update, :destroy]
 end
