@@ -5,7 +5,7 @@ class FoodDiaryEntry < ApplicationRecord
   validates :user_id, numericality: { only_integer: true }, allow_nil: false
 
   # ------------ MODEL ASSOCIATIONS ---------------- #
-  belongs_to :user
+  belongs_to :user, dependent: :destroy
   has_many :meals
   has_many :foods
 end

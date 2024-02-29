@@ -24,16 +24,15 @@ class UserController < ApplicationController
 
   def confirm_email
     user_by_confirmation_token = User.find_by(confirmation_token: params[:confirmation_token])
-    if @user && @user.confirmation_token_expires_at > Time.now.to_i && @user.is_same_as?(user_by_confirmation_token)
-      @user.update!(confirmation_token: nil, confirmed_at: Time.now.to_i)
-      render json: @user, status: :accepted, serializer: UserSerializer
+    if @user && @user.confirmation_token_expires_at > Time.now && @user.is_same_as?(user_by_confirmation_token)
+      @user.update!(confirmation_token: nil, confirmed_at: Time.now)
+      render json: @user, status: :accepted, serializer: UserRegistrationSerializer
     else
       render json: { error: "Invalid or expired confirmation token" }, status: :unauthorized
     end
   end
 
   def resend_confirmation_email
-
     if @user && @user.confirmed_at.nil?
       @user.regenerate_confirmation_token
       UserMailer.confirmation_email(@user).deliver_now
