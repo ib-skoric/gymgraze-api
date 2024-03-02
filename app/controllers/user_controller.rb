@@ -7,6 +7,7 @@ class UserController < ApplicationController
 
   # ----------- RESCUE FROM -------------
   rescue_from AuthenticationError, with: :unauthorized_request
+  rescue_from ActiveSupport::MessageVerifier::InvalidSignature, with: :unauthorized_request
   def index
     render json: @user, serializer: UserSerializer, status: :ok
   end
