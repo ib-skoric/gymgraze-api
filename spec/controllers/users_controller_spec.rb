@@ -49,4 +49,19 @@ describe UserController do
       expect(response).to have_http_status(:accepted)
     end
   end
-end
+
+  describe "POST to /check_email_exists endpoint" do
+    let (:user) { FactoryBot.create(:user) }
+
+    it "should return a conflict if the email is already in use" do
+      post 'check_email_exists', params: { email: user.email }
+      expect(response).to have_http_status(:conflict)
+    end
+
+    it "should return ok if the email is not in use" do
+      post 'check_email_exists', params: { email: "some_other_email@test.com" }
+
+      expect(response).to have_http_status(:ok)
+  end
+  end
+  end
