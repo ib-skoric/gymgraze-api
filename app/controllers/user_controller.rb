@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  class AuthenticationError < StandardError; end
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
@@ -48,7 +49,7 @@ class UserController < ApplicationController
   def request_password_reset
     raise AuthenticationError unless @user
 
-    UserMailer.password_reset_email(@user).deliver_now
+    UserMailer.reset_password(@user).deliver_now
     render json: { message: "Password reset email sent" }, status: :accepted
   end
 
@@ -69,7 +70,7 @@ class UserController < ApplicationController
   end
 
   def password_reset_params
-    params.require(:user).permit(:password, :password_confirmation)
+    params.require(:user).permit(:password)
   end
 
   def unauthorized_request
