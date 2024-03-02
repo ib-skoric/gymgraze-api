@@ -3,4 +3,12 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: @user.email, subject: '🏋️‍♂️ GymGraze: Confirm your email')
   end
+
+  def reset_password(user)
+    @user = user
+
+    @token = user.signed_id(expires_in: 15.minutes, purpose: 'password_reset')
+
+    mail(to: @user.email, subject: '🏋️‍♂️ GymGraze: Reset your password')
+  end
 end

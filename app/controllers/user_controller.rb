@@ -1,8 +1,13 @@
 class UserController < ApplicationController
+  class AuthenticationError < StandardError; end
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :request_password_reset]
+
+  # ----------- RESCUE FROM -------------
+  rescue_from AuthenticationError, with: :unauthorized_request
+  rescue_from ActiveSupport::MessageVerifier::InvalidSignature, with: :unauthorized_request
   def index
     render json: @user, serializer: UserSerializer, status: :ok
   end
@@ -42,9 +47,34 @@ class UserController < ApplicationController
     end
   end
 
+  def request_password_reset
+    raise AuthenticationError unless @user
+
+    UserMailer.reset_password(@user).deliver_now
+    render json: { message: "Password reset email sent" }, status: :accepted
+  end
+
+  def reset_password
+    user = User.find_signed!(params[:token], purpose: 'password_reset')
+
+    if user.update(password_reset_params)
+      render json: { message: "Password reset successfully" }, status: :accepted
+    else
+      raise AuthenticationError
+    end
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:email, :password, :name, :age, :weight, :height, :confirmation_token, :confirmed_at, :confirmation_sent_at, :confirmation_token_expires_at)
+  end
+
+  def password_reset_params
+    params.require(:user).permit(:password)
+  end
+
+  def unauthorized_request
+    render json: { error: "Invalid credentials" }, status: :unauthorized
   end
 end
