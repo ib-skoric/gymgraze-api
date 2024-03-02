@@ -64,6 +64,15 @@ class UserController < ApplicationController
     end
   end
 
+  def check_email_exists
+    user = User.find_by(email: params[:email])
+    if user
+      render json: { message: "User with this email already exists" }, status: :conflict
+    else
+      render json: { message: "Email is not in use yet" }, status: :ok
+    end
+  end
+
   private
 
   def user_params
