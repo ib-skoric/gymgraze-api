@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   post '/request_password_reset', to: 'user#request_password_reset'
   post '/reset_password', to: 'user#reset_password'
 
+  post '/check_email_exists', to: 'user#check_email_exists'
+
   resources :exercises, only: [:create, :show, :index]
   resources :workout_diary_entries, only: [:create, :show]
   resources :workouts, only: [:create, :show]
