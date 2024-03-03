@@ -3,7 +3,7 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :request_password_reset]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email]
 
   # ----------- RESCUE FROM -------------
   rescue_from AuthenticationError, with: :unauthorized_request
@@ -48,10 +48,13 @@ class UserController < ApplicationController
   end
 
   def request_password_reset
-    raise AuthenticationError unless @user
-
-    UserMailer.reset_password(@user).deliver_now
-    render json: { message: "Password reset email sent" }, status: :accepted
+    @user = User.find_by(email: params[:email])
+    if @user
+      UserMailer.reset_password(@user).deliver_now
+      render json: { message: "Password reset email sent" }, status: :accepted
+    else
+      render json: { message: "User with that email was not found" }, status: :not_found
+    end
   end
 
   def reset_password
