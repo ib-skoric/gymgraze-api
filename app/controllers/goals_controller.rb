@@ -7,7 +7,7 @@ class GoalsController < ApplicationController
   def create
     @goal = Goal.new(goal_params.merge(user_id: @user.id))
     if @goal.save
-      render json: @goal, status: :created
+      render json: @goal, status: :created, serializer:GoalSerializer
     else
       render json: @goal.errors, status: :unprocessable_entity
     end
