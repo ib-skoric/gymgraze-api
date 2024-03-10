@@ -57,6 +57,16 @@ class UserController < ApplicationController
     end
   end
 
+  def validate_password_reset_token
+    user = User.find_signed!(params[:token], purpose: 'password_reset')
+
+    if user
+      render json: { message: "Token valid" }, status: :accepted
+    else
+      raise AuthenticationError
+    end
+  end
+
   def reset_password
     user = User.find_signed!(params[:token], purpose: 'password_reset')
 

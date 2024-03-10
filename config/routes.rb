@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post '/resend_confirmation_email', to: 'user#resend_confirmation_email'
 
   post '/request_password_reset', to: 'user#request_password_reset'
+  post '/validate_password_reset_token', to: 'user#validate_password_reset_token'
   post '/reset_password', to: 'user#reset_password'
 
   post '/check_email_exists', to: 'user#check_email_exists'
