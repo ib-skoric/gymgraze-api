@@ -14,8 +14,13 @@ class WorkoutDiaryEntriesController < ApplicationController
   end
 
   def show
-    diary_entry = WorkoutDiaryEntry.find(params[:id])
-    render json: diary_entry, status: :ok, serializer: WorkoutDiaryEntrySerializer, include: ['workouts']
+    diary_entry = WorkoutDiaryEntry.find(params[:id]).includes(:workouts, workouts: :exercises)
+    render json: diary_entry, status: :ok, serializer: WorkoutDiaryEntrySerializer, include: ['workouts', 'workouts.exercises']
+  end
+
+  def fetch_by_date
+    diary_entry = WorkoutDiaryEntry.includes(:workouts).includes(:workouts, workouts: :exercises).find_by!(date: params[:date])
+    render json: diary_entry, status: :ok, serializer: WorkoutDiaryEntrySerializer, include: ['workouts', 'workouts.exercises']
   end
 
   private
