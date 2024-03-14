@@ -8,8 +8,8 @@ class FoodDiaryEntriesController < ApplicationController
     render json: FoodDiaryEntry.includes(foods: :nutritional_info).where(user_id: @user.id), include: ['foods.nutritional_info']
   end
 
-  def show
-    render json: FoodDiaryEntry.includes(foods: [:nutritional_info, :meal]).find(params[:id]), include: ['foods.nutritional_info', 'foods.meal']
+  def fetch_by_date
+    render json: FoodDiaryEntry.includes(foods: [:nutritional_info, :meal]).find_by!(date: params[:date]), include: ['foods.nutritional_info', 'foods.meal']
   end
 
   def create

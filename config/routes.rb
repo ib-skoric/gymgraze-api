@@ -26,5 +26,7 @@ Rails.application.routes.draw do
 
   put '/update_goal', to: 'goals#update_goal'
 
-  resources :food_diary_entries, only: [:index, :show, :create, :update, :destroy]
+  resources :food_diary_entries, only: [:index, :create, :update, :destroy]
+
+  get '/food_diary_entries/:date', to: 'food_diary_entries#fetch_by_date', as: 'food_diary_by_date'
 end
