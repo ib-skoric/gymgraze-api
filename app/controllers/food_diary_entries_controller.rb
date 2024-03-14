@@ -9,7 +9,7 @@ class FoodDiaryEntriesController < ApplicationController
   end
 
   def show
-    render json: FoodDiaryEntry.includes(foods: :nutritional_info).find(params[:id]), include: ['foods.nutritional_info']
+    render json: FoodDiaryEntry.includes(foods: [:nutritional_info, :meal]).find(params[:id]), include: ['foods.nutritional_info', 'foods.meal']
   end
 
   def create

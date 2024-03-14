@@ -3,7 +3,4 @@ class WorkoutSerializer < ActiveModel::Serializer
 
   has_many :exercises, serializer: ExerciseSerializer
 
-  def date
-    object.date.to_i
-  end
 end
