@@ -2,7 +2,7 @@ class NutritionalInfoSerializer < ActiveModel::Serializer
   attributes :id, :kcal, :carbs, :protein, :fat, :salt, :sugar, :fiber
 
   def kcal
-    object.kcal.to_f
+    object.kcal.to_i
   end
 
   def carbs
