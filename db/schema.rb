@@ -36,13 +36,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_02_104331) do
     t.index ["workout_id"], name: "index_exercises_on_workout_id"
   end
 
-  create_table "food_diaries", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_food_diaries_on_user_id"
-  end
-
   create_table "food_diary_entries", force: :cascade do |t|
     t.date "date"
     t.bigint "user_id", null: false
@@ -133,7 +126,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_02_104331) do
   add_foreign_key "exercise_sets", "workouts"
   add_foreign_key "exercises", "users"
   add_foreign_key "exercises", "workouts"
-  add_foreign_key "food_diaries", "users"
   add_foreign_key "food_diary_entries", "users"
   add_foreign_key "foods", "food_diary_entries"
   add_foreign_key "foods", "meals"
