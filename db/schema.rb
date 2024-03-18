@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_18_122937) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_18_201325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_122937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "food_diary_entry_id"
+    t.integer "amount"
     t.index ["food_diary_entry_id"], name: "index_foods_on_food_diary_entry_id"
     t.index ["meal_id"], name: "index_foods_on_meal_id"
   end
