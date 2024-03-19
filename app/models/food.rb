@@ -5,7 +5,7 @@ class Food < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS --------------- #
   belongs_to :meal
-  has_one :nutritional_info
+  has_one :nutritional_info, dependent: :destroy
   belongs_to :food_diary_entry
 
   accepts_nested_attributes_for :meal

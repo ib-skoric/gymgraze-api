@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :exercises, only: [:create, :show, :index]
   resources :workout_diary_entries, only: [:create]
   resources :workouts, only: [:create, :show]
-  resources :foods, only: [:create, :show, :update]
+  resources :foods, only: [:create, :show, :update, :destroy]
   resources :exercise_set, only: [:index, :show, :create]
   resources :goals, only: [:create, :index]
 

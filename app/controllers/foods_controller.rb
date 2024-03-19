@@ -29,6 +29,12 @@ class FoodsController < ApplicationController
     end
   end
 
+  def destroy
+    food = Food.find(params[:id])
+    food.destroy
+    render json: { message: "Food deleted successfully" }, status: :ok
+  end
+
   private
 
   def food_params
