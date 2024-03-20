@@ -4,7 +4,9 @@ class WorkoutDiaryEntriesController < ApplicationController
   before_action :authenticate_user
 
   def create
-    diary_entry = WorkoutDiaryEntry.new(diary_entry_params.merge(user_id: @user.id))
+    date = diary_entry_params[:date].to_date
+
+    diary_entry = WorkoutDiaryEntry.new(date: date, user_id: @user.id)
 
     if diary_entry.save
       render json: diary_entry, status: :created, serializer: WorkoutDiaryEntrySerializer, include: ['workouts']
