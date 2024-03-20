@@ -12,7 +12,8 @@ class FoodsController < ApplicationController
   end
 
   def create
-    food = Food.new(food_params)
+    food_diary_entry_id = diary_date(params[:diary_date])
+    food = Food.new(food_params.merge(food_diary_entry_id: food_diary_entry_id))
     if food.save
       render json: food, status: :created, serializer: FoodSerializer
     else
@@ -38,10 +39,16 @@ class FoodsController < ApplicationController
   private
 
   def food_params
-    params.require(:food).permit(:name, :barcode, :kcal, :protein, :carbs, :fat, :salt, :sugar, :fibre, :meal_id, :food_diary_entry_id, :amount)
+    params.require(:food).permit(:name, :barcode, :meal_id, :food_diary_entry_id, :amount, :diary_date, nutritional_info_attributes: [:kcal, :protein, :fat, :carbs, :salt, :sugar, :fiber])
   end
 
   def record_not_found(e)
     render json: { error: e.message }, status: :not_found
+  end
+
+  def diary_date(date)
+    diary = FoodDiaryEntry.find_by(date: date.to_date)
+
+    diary.id if diary
   end
 end
