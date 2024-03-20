@@ -13,7 +13,9 @@ class FoodDiaryEntriesController < ApplicationController
   end
 
   def create
-    diary_entry = FoodDiaryEntry.new(diary_entry_params)
+    date = diary_entry_params[:date].to_date
+
+    diary_entry = FoodDiaryEntry.new(date: date)
 
     diary_entry.user_id = @user.id
 
