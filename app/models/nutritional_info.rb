@@ -3,5 +3,5 @@ class NutritionalInfo < ApplicationRecord
   validates :kcal, presence: true, numericality: { only_integer: true }, length: { minimum: 1 }
 
   # ------------ MODEL ASSOCIATIONS --------------- #
-  belongs_to :food
+  belongs_to :food, dependent: :destroy
 end
