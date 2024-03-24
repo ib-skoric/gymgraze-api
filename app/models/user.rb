@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   after_create :generate_confirmation_token
+  after_create :create_default_exercises
 
   # ------------ MODEL VALIDATIONS ---------------- #
   has_secure_password
@@ -32,5 +33,20 @@ class User < ApplicationRecord
     self.confirmation_token_expires_at = Time.now.utc + 1.hours
     self.confirmation_sent_at = Time.now.utc
     save!
+  end
+
+  def create_default_exercises
+    Exercise.create(name: "Barbell squat", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Bench press", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Shoulder press", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Dead lift", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Bicep curls", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Lat pull down", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Chest fly", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Barbell row", user_id: self.id, exercise_type: "strength")
+    Exercise.create(name: "Running", user_id: self.id, exercise_type: "cardio")
+    Exercise.create(name: "Walking", user_id: self.id, exercise_type: "cardio")
+    Exercise.create(name: "Jogging", user_id: self.id, exercise_type: "cardio")
+    Exercise.create(name: "HIIT", user_id: self.id, exercise_type: "cardio")
   end
 end
