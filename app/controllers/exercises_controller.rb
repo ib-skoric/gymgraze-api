@@ -19,7 +19,7 @@ class ExercisesController < ApplicationController
   end
 
   def index
-    @exercises = Exercise.where(user_id: @user.id)
+    @exercises = Exercise.where(user_id: @user.id, workout_id: nil)
     render json: @exercises, status: :ok, each_serializer: ExerciseSerializer
   end
 
