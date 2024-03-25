@@ -4,7 +4,6 @@ class ExerciseSet < ApplicationRecord
   validates :weight, presence: true
   validates :exercise_id, presence: true
 
-
   # ------------ MODEL ASSOCIATIONS ---------------- #
   belongs_to :exercise
 end

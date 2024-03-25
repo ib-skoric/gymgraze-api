@@ -3,7 +3,8 @@ class WorkoutsController < ApplicationController
   before_action :authenticate_user
 
   def create
-    workout = Workout.new(workout_params)
+    workout = Workout.new(workout_params.merge(user_id: @user.id))
+
     if workout.save
       render workout, status: :created, serializer: WorkoutSerializer
     else
@@ -14,6 +15,6 @@ class WorkoutsController < ApplicationController
   private
 
   def workout_params
-    params.require(:workout).permit(:date, :workout_diary_entry_id, :calories_burned)
+    params.require(:workout).permit(:date, :workout_diary_entry_id)
   end
 end
