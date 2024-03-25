@@ -12,6 +12,11 @@ class WorkoutsController < ApplicationController
     end
   end
 
+  def show
+    workout = Workout.includes(:exercises, exercises: :exercise_sets).find(params[:id])
+    render json: workout, status: :ok, serializer: WorkoutSerializer, include: ['exercises', 'exercises.exercise_sets']
+  end
+
   private
 
   def workout_params

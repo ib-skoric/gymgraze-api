@@ -4,18 +4,22 @@ class ExercisesController < ApplicationController
   before_action :authenticate_user
 
   def create
-    @exercise = Exercise.new(exercise_params.merge(user_id: @user.id))
-
-    if @exercise.save
-      render json: @exercise, status: :created, serializer: ExerciseSerializer
-    else
-      render json: @exercise.errors, status: :unprocessable_entity
+    @exercises = []
+    exercise_params[:exercises].each do |exercise|
+      @exercise = Exercise.new(exercise.merge(user_id: @user.id))
+      if @exercise.save
+        @exercises << @exercise
+      else
+        render json: @exercise.errors, status: :unprocessable_entity
+        return
+      end
     end
+    render json: @exercises, status: :created, each_serializer: ExerciseSerializer
   end
 
   def show
-    @exercise = Exercise.find(params[:id])
-    render json: @exercise, status: :ok, serializer: ExerciseSerializer
+    @exercise = Exercise.includes(:exercise_sets).find(params[:id])
+    render json: @exercise, status: :ok, serializer: ExerciseSerializer, include: ['exercise_sets']
   end
 
   def index
@@ -26,6 +30,6 @@ class ExercisesController < ApplicationController
   private
 
   def exercise_params
-    params.require(:exercise).permit(:name, :exercise_type, :workout_id, :calories_burned, :duration, :date, :user_id)
+    params.permit(exercises: [:name, :exercise_type, :workout_id, exercise_sets_attributes: [:reps, :weight, :workout_id]])
   end
 end
