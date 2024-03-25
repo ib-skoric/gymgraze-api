@@ -7,5 +7,7 @@ class Exercise < ApplicationRecord
   # ------------ MODEL ASSOCIATIONS ---------------- #
   belongs_to :user
   belongs_to :workout, optional: true
+  has_many :exercise_sets
 
+  accepts_nested_attributes_for :exercise_sets
 end
