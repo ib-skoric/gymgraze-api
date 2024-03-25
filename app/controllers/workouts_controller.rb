@@ -6,7 +6,7 @@ class WorkoutsController < ApplicationController
     workout = Workout.new(workout_params.merge(user_id: @user.id))
 
     if workout.save
-      render workout, status: :created, serializer: WorkoutSerializer
+      render json: workout, status: :created, serializer: WorkoutSerializer
     else
        render json: { errors: workout.errors.full_messages }, status: :unprocessable_entity
     end
