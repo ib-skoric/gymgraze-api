@@ -21,7 +21,7 @@ class WorkoutDiaryEntriesController < ApplicationController
   end
 
   def fetch_by_date
-    diary_entry = WorkoutDiaryEntry.includes(:workouts).includes(:workouts, workouts: :exercises).find_by!(date: params[:date])
+    diary_entry = WorkoutDiaryEntry.includes(:workouts).includes(:workouts, workouts: :exercises).find_by!(date: params[:date], user_id: @user.id)
     render json: diary_entry, status: :ok, serializer: WorkoutDiaryEntrySerializer, include: ['workouts', 'workouts.exercises']
   end
 
