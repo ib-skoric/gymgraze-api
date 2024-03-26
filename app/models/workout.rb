@@ -5,5 +5,5 @@ class Workout < ApplicationRecord
   # ------------ MODEL ASSOCIATIONS ---------------- #
   belongs_to :workout_diary_entry
   belongs_to :user
-  has_many :exercises
+  has_many :exercises, dependent: :delete_all
 end

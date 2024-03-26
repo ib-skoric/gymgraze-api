@@ -4,9 +4,9 @@ class Exercise < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS ---------------- #
   belongs_to :user
-  belongs_to :workout, optional: true
+  belongs_to :workout
   belongs_to :exercise_type
-  has_many :exercise_sets
+  has_many :exercise_sets, dependent: :delete_all
 
   accepts_nested_attributes_for :exercise_sets
 end
