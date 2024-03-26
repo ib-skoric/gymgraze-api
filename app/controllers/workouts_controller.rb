@@ -17,6 +17,20 @@ class WorkoutsController < ApplicationController
     render json: workout, status: :ok, serializer: WorkoutSerializer, include: ['exercises', 'exercises.exercise_sets']
   end
 
+  def add_exercises
+    workout = Workout.find(params[:id])
+    exercises = []
+    params[:exercises].each do |exercise|
+      exercises << Exercise.new(exercise.merge(workout_id: workout.id, user_id: @user.id))
+    end
+
+    if Exercise.import(exercises)
+      render json: workout, status: :ok, serializer: WorkoutSerializer, include: ['exercises', 'exercises.exercise_sets']
+    else
+      render json: { errors: exercises.map(&:errors).map(&:full_messages) }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def workout_params
