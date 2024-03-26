@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   after_create :generate_confirmation_token
-  # after_create :create_default_exercises
+  after_create :create_default_exercise_types
 
   # ------------ MODEL VALIDATIONS ---------------- #
   has_secure_password
@@ -35,18 +35,18 @@ class User < ApplicationRecord
     save!
   end
 
-  # def create_default_exercises
-  #   ExerciseType.create(name: "Barbell squat", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Bench press", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Shoulder press", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Dead lift", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Bicep curls", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Lat pull down", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Chest fly", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Barbell row", user_id: self.id, exercise_category: "strength")
-  #   ExerciseType.create(name: "Running", user_id: self.id, exercise_category: "cardio")
-  #   ExerciseType.create(name: "Walking", user_id: self.id, exercise_category: "cardio")
-  #   ExerciseType.create(name: "Jogging", user_id: self.id, exercise_category: "cardio")
-  #   ExerciseType.create(name: "HIIT", user_id: self.id, exercise_category: "cardio")
-  # end
+  def create_default_exercise_types
+    ExerciseType.create(name: "Barbell squat", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Bench press", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Shoulder press", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Dead lift", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Bicep curls", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Lat pull down", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Chest fly", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Barbell row", user_id: self.id, exercise_category: "strength")
+    ExerciseType.create(name: "Running", user_id: self.id, exercise_category: "cardio")
+    ExerciseType.create(name: "Walking", user_id: self.id, exercise_category: "cardio")
+    ExerciseType.create(name: "Jogging", user_id: self.id, exercise_category: "cardio")
+    ExerciseType.create(name: "HIIT", user_id: self.id, exercise_category: "cardio")
+  end
 end
