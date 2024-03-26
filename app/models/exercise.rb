@@ -1,6 +1,5 @@
 class Exercise < ApplicationRecord
   # ------------ MODEL VALIDATIONS ---------------- #
-  validates :name, presence: true, length: { minimum: 2 }
   validates :user_id, presence: true
 
   # ------------ MODEL ASSOCIATIONS ---------------- #
