@@ -1,6 +1,6 @@
 class ExerciseSet < ApplicationRecord
   # ------------ MODEL VALIDATIONS ---------------- #
-  validates :reps, presence: true, numericality: { greater_than: 0 }
+  validates :reps, presence: true
   validates :weight, presence: true
 
   # ------------ MODEL ASSOCIATIONS ---------------- #
