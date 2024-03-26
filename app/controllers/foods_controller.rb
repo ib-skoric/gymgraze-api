@@ -12,8 +12,7 @@ class FoodsController < ApplicationController
   end
 
   def create
-    food_diary_entry_id = diary_date(params[:diary_date])
-    food = Food.new(food_params.merge(food_diary_entry_id: food_diary_entry_id))
+    food = Food.new(food_params.merge(food_diary_entry_id: params[:food_diary_entry_id]))
     if food.save
       render json: food, status: :created, serializer: FoodSerializer
     else
