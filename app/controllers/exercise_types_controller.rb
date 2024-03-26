@@ -1,4 +1,4 @@
-class ExerciseTypeController < ApplicationController
+class ExerciseTypesController < ApplicationController
   include ActionController::HttpAuthentication::Token
   before_action :authenticate_user
 

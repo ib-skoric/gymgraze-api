@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   resources :foods, only: [:create, :show, :update, :destroy]
   resources :exercise_set, only: [:index, :show, :create]
   resources :goals, only: [:create, :index]
+  resources :exercise_types, only: [:create, :index]
 
-  put '/update_exercises_with_sets', to: 'exercises#update_exercises_with_sets'
 
   put '/update_goal', to: 'goals#update_goal'
 
