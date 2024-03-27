@@ -15,4 +15,8 @@ class ExerciseTypesController < ApplicationController
     @exercise_types = ExerciseType.where(user_id: @user.id)
     render json: @exercise_types, status: :ok, each_serializer: ExerciseTypeSerializer
   end
+
+  private def exercise_type_params
+    params.require(:exercise_type).permit(:name, :exercise_category)
+  end
 end
