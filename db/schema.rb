@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_24_150619) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_27_204910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,14 +25,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_24_150619) do
     t.index ["workout_id"], name: "index_exercise_sets_on_workout_id"
   end
 
-  create_table "exercises", force: :cascade do |t|
+  create_table "exercise_types", force: :cascade do |t|
     t.string "name"
-    t.string "exercise_type"
+    t.string "exercise_category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_exercise_types_on_user_id"
+  end
+
+  create_table "exercises", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "workout_id"
     t.string "type"
+    t.bigint "exercise_type_id", null: false
+    t.string "name"
+    t.string "exercise_category"
+    t.integer "duration"
+    t.index ["exercise_type_id"], name: "index_exercises_on_exercise_type_id"
     t.index ["user_id"], name: "index_exercises_on_user_id"
     t.index ["workout_id"], name: "index_exercises_on_workout_id"
   end
@@ -125,9 +137,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_24_150619) do
   end
 
   add_foreign_key "exercise_sets", "exercises"
-  add_foreign_key "exercise_sets", "workouts"
+  add_foreign_key "exercise_sets", "workouts", on_delete: :cascade
+  add_foreign_key "exercise_types", "users"
+  add_foreign_key "exercises", "exercise_types"
   add_foreign_key "exercises", "users"
-  add_foreign_key "exercises", "workouts"
+  add_foreign_key "exercises", "workouts", on_delete: :cascade
   add_foreign_key "food_diary_entries", "users"
   add_foreign_key "foods", "food_diary_entries"
   add_foreign_key "foods", "meals"
