@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   after_create :generate_confirmation_token
   after_create :create_default_exercise_types
+  after_create :create_default_meals
 
   # ------------ MODEL VALIDATIONS ---------------- #
   has_secure_password
@@ -48,5 +49,12 @@ class User < ApplicationRecord
     ExerciseType.create(name: "Walking", user_id: self.id, exercise_category: "cardio")
     ExerciseType.create(name: "Jogging", user_id: self.id, exercise_category: "cardio")
     ExerciseType.create(name: "HIIT", user_id: self.id, exercise_category: "cardio")
+  end
+
+  def create_default_meals
+    Meal.create(name: "Breakfast", user_id: self.id)
+    Meal.create(name: "Lunch", user_id: self.id)
+    Meal.create(name: "Dinner", user_id: self.id)
+    Meal.create(name: "Snacks", user_id: self.id)
   end
 end

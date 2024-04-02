@@ -56,6 +56,8 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
   host = 'localhost:3000'
   config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
 
@@ -64,7 +66,7 @@ Rails.application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :user_name            => "ib.skoric@gmail.com",
-    :password             => "cslk xjfn nhpi xmdh",
+    :password             => "hjxt ktyf ajye zbkc",
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
