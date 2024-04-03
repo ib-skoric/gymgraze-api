@@ -7,15 +7,17 @@ class ExerciseTypeSerializer < ActiveModel::Serializer
 
     unless object.exercise_category == "cardio" || last_exercise.nil?
     # Then find all exercise sets that belong to this exercise
-    exercise_sets = ExerciseSet.find_by(exercise_id: last_exercise.id)
+    exercise_sets = ExerciseSet.where(exercise_id: last_exercise.id)
     end
 
     if exercise_sets
-      {
-        reps: exercise_sets.reps,
-        weight: exercise_sets.weight,
-        created_at: exercise_sets.created_at
-      }
+      exercise_sets.map do |exercise_set|
+        {
+          reps: exercise_set.reps,
+          weight: exercise_set.weight,
+          created_at: exercise_set.created_at
+        }
+      end
     else
       []
     end
