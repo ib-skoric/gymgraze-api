@@ -14,8 +14,7 @@ class ExerciseTypeSerializer < ActiveModel::Serializer
       exercise_sets.map do |exercise_set|
         {
           reps: exercise_set.reps,
-          weight: exercise_set.weight,
-          created_at: exercise_set.created_at
+          weight: exercise_set.weight
         }
       end
     else
