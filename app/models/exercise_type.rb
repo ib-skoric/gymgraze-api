@@ -5,4 +5,6 @@ class ExerciseType < ApplicationRecord
 
   # ------------ MODEL ASSOCIATIONS ---------------- #
   has_many :exercises
+  has_many :template_exercises
+  has_many :workout_templates, through: :template_exercises
 end

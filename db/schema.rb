@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_04_193623) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_06_124144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_04_193623) do
     t.index ["food_id"], name: "index_nutritional_infos_on_food_id"
   end
 
+  create_table "template_exercises", force: :cascade do |t|
+    t.bigint "workout_template_id", null: false
+    t.bigint "exercise_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_type_id"], name: "index_template_exercises_on_exercise_type_id"
+    t.index ["workout_template_id"], name: "index_template_exercises_on_workout_template_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password"
@@ -123,6 +132,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_04_193623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_workout_diary_entries_on_user_id"
+  end
+
+  create_table "workout_templates", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_workout_templates_on_user_id"
   end
 
   create_table "workouts", force: :cascade do |t|
@@ -149,7 +166,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_04_193623) do
   add_foreign_key "goals", "users"
   add_foreign_key "meals", "users"
   add_foreign_key "nutritional_infos", "foods"
+  add_foreign_key "template_exercises", "exercise_types"
+  add_foreign_key "template_exercises", "workout_templates"
   add_foreign_key "workout_diary_entries", "users"
+  add_foreign_key "workout_templates", "users"
   add_foreign_key "workouts", "users"
   add_foreign_key "workouts", "workout_diary_entries"
 end
