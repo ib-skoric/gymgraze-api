@@ -1,5 +1,5 @@
 class TemplateExerciseSerializer < ActiveModel::Serializer
-  attributes :id, :name, :exercise_type_id, :created_at, :historical_set_rep_data
+  attributes :id, :name, :exercise_type_id, :historical_set_rep_data
 
   belongs_to :exercise_type
 

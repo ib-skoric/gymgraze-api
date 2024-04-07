@@ -12,6 +12,11 @@ class WorkoutTemplatesController < ApplicationController
     end
   end
 
+  def index
+    workout_templates = WorkoutTemplate.where(user_id: @user.id)
+    render json: workout_templates, status: :ok, each_serializer: WorkoutTemplateSerializer
+  end
+
   private
 
   def workout_template_params
