@@ -11,8 +11,7 @@ class TemplateExerciseSerializer < ActiveModel::Serializer
     # find last instance of this exercise type used for exercise
     last_exercise = Exercise.where(exercise_type_id: object.exercise_type_id).last
 
-    unless last_exercise.exercise_category == "cardio" || last_exercise.nil?
-      # Then find all exercise sets that belong to this exercise
+    if last_exercise
       exercise_sets = ExerciseSet.where(exercise_id: last_exercise.id)
     end
 
