@@ -20,6 +20,6 @@ class WorkoutTemplatesController < ApplicationController
   private
 
   def workout_template_params
-    params.require(:workout_template).permit(:name, template_exercises_attributes: [:id, :exercise_type_id])
+    params.require(:workout_template).permit(:name, :exercise_category, template_exercises_attributes: [:id, :exercise_type_id])
   end
 end
