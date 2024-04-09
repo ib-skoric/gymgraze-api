@@ -23,7 +23,7 @@ class ProgressDiaryEntriesController < ApplicationController
   private
 
   def diary_entry_params
-    params.require(:progress_diary_entry).permit(:date, :weight, :arm_measurement, :waist_measurement, :hip_measurements, :chest_measurement)
+    params.require(:progress_diary_entry).permit(:date, :weight, :arm_measurement, :waist_measurement, :hip_measurement, :chest_measurement)
   end
 
 end
