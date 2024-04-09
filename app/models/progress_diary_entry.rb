@@ -1,0 +1,2 @@
+class ProgressDiaryEntry < ApplicationRecord
+end
