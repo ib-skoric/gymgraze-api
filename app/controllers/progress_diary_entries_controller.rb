@@ -1,0 +1,2 @@
+class ProgressDiaryEntriesController < ApplicationController
+end
