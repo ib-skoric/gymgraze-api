@@ -86,10 +86,22 @@ class UserController < ApplicationController
     end
   end
 
+  def update
+    if @user.update(update_user_params)
+      render json: @user, status: :accepted, serializer: UserRegistrationSerializer
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:email, :password, :name, :age, :weight, :height, :confirmation_token, :confirmed_at, :confirmation_sent_at, :confirmation_token_expires_at)
+  end
+
+  def update_user_params
+    params.require(:user).permit(:name, :age, :weight, :height)
   end
 
   def password_reset_params
