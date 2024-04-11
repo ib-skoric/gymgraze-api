@@ -3,7 +3,7 @@ class MealsController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:create, :update_all, :destroy, :index]
+  before_action :authenticate_user, only: [:create, :update_all, :destroy]
 
   def create
     @meal = Meal.new(meal_params.merge(user_id: @user.id))
@@ -12,11 +12,6 @@ class MealsController < ApplicationController
     else
       render json: @meal.errors, status: :unprocessable_entity
     end
-  end
-
-  def index
-    @meals = Meal.where(user_id: @user.id)
-    render json: @meals, status: :ok, each_serializer: MealSerializer
   end
 
   def update
