@@ -3,7 +3,7 @@ class MealsController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:create, :update, :destroy]
+  before_action :authenticate_user, only: [:create, :update_all, :destroy, :index]
 
   def create
     @meal = Meal.new(meal_params.merge(user_id: @user.id))
@@ -12,6 +12,11 @@ class MealsController < ApplicationController
     else
       render json: @meal.errors, status: :unprocessable_entity
     end
+  end
+
+  def index
+    @meals = Meal.where(user_id: @user.id)
+    render json: @meals, status: :ok, each_serializer: MealSerializer
   end
 
   def update
@@ -23,8 +28,30 @@ class MealsController < ApplicationController
     end
   end
 
+  def update_all
+    params[:meals].each do |meal_param|
+      meal = Meal.find(meal_param[:id])
+      meal.update(name: meal_param[:name])
+    end
+
+    @meals = Meal.find(params[:meals].map { |meal| meal[:id] })
+
+    if @meals.all? { |meal| meal.valid? }
+      render json: @meals, status: :accepted, each_serializer: MealSerializer
+    else
+      render json: @meals.map(&:errors), status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @meal = Meal.find(params[:id])
+    # find all foods that belong to this meal
+    foods = Food.where(meal_id: @meal.id)
+    # destroy each food
+    foods.each do |food|
+      food.destroy
+    end
+
     @meal.destroy
     head :no_content
   end
