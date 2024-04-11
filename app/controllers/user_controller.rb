@@ -3,7 +3,7 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update]
 
   # ----------- RESCUE FROM -------------
   rescue_from AuthenticationError, with: :unauthorized_request

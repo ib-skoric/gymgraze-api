@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_08_202816) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_09_192814) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_08_202816) do
     t.index ["food_id"], name: "index_nutritional_infos_on_food_id"
   end
 
+  create_table "progress_diary_entries", force: :cascade do |t|
+    t.date "date"
+    t.decimal "weight"
+    t.decimal "hip_measurement"
+    t.decimal "arm_measurement"
+    t.decimal "waist_measurement"
+    t.decimal "chest_measurement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_progress_diary_entries_on_user_id"
+  end
+
   create_table "template_exercises", force: :cascade do |t|
     t.bigint "workout_template_id", null: false
     t.bigint "exercise_type_id", null: false
@@ -167,6 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_08_202816) do
   add_foreign_key "goals", "users"
   add_foreign_key "meals", "users"
   add_foreign_key "nutritional_infos", "foods"
+  add_foreign_key "progress_diary_entries", "users"
   add_foreign_key "template_exercises", "exercise_types"
   add_foreign_key "template_exercises", "workout_templates"
   add_foreign_key "workout_diary_entries", "users"

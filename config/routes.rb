@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post '/authenticate', to: 'authentication#create'
   resources :user, only: [:show, :index, :create]
   get "/profile" => "user#profile"
+  put "/update_profile" => "user#update"
 
   post '/confirm_email', to: 'user#confirm_email'
   post '/resend_confirmation_email', to: 'user#resend_confirmation_email'
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
   resources :goals, only: [:create, :index]
   resources :exercise_types, only: [:create, :index]
   resources :workout_templates, only: [:create, :index]
+  resources :meals, only: [:create, :update, :destroy]
 
 
   put '/update_goal', to: 'goals#update_goal'
@@ -33,4 +35,6 @@ Rails.application.routes.draw do
 
   get '/food_diary_entries/:date', to: 'food_diary_entries#fetch_by_date', as: 'food_diary_by_date'
   get '/workout_diary_entries/:date', to: 'workout_diary_entries#fetch_by_date', as: 'workout_diary_by_date'
+  get '/progress_diary_entries/:date', to: 'progress_diary_entries#fetch_by_date', as: 'progress_diary_by_date'
+  resources :progress_diary_entries, only: [:create]
 end
