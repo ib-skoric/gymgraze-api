@@ -4,7 +4,7 @@ class Food < ApplicationRecord
   validates :barcode, numericality: { only_integer: true }
 
   # ------------ MODEL ASSOCIATIONS --------------- #
-  belongs_to :meal
+  belongs_to :meal, dependent: :destroy
   has_one :nutritional_info, dependent: :destroy
   belongs_to :food_diary_entry
 
