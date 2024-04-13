@@ -30,7 +30,7 @@ class UserController < ApplicationController
 
     # calculate the total kcal
     nutritional_infos.each do |nutritional_info|
-      kcal += nutritional_info.kcal
+      kcal += (nutritional_info.kcal / 100) * foods.find { |food| food.id == nutritional_info.food_id }.amount
     end
 
     render json: { kcal: kcal.to_f }, status: :ok
