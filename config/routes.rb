@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   post '/check_email_exists', to: 'user#check_email_exists'
 
-  resources :exercises, only: [:create, :show, :index]
+  resources :exercises, only: [:create, :show, :index, :destroy]
   resources :workout_diary_entries, only: [:create]
   resources :workouts, only: [:create, :show]
   resources :foods, only: [:create, :show, :update, :destroy]
@@ -37,5 +37,5 @@ Rails.application.routes.draw do
   get '/food_diary_entries/:date', to: 'food_diary_entries#fetch_by_date', as: 'food_diary_by_date'
   get '/workout_diary_entries/:date', to: 'workout_diary_entries#fetch_by_date', as: 'workout_diary_by_date'
   get '/progress_diary_entries/:date', to: 'progress_diary_entries#fetch_by_date', as: 'progress_diary_by_date'
-  resources :progress_diary_entries, only: [:create]
+  resources :progress_diary_entries, only: [:create, :destroy]
 end

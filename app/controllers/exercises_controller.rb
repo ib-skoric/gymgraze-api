@@ -27,6 +27,12 @@ class ExercisesController < ApplicationController
     render json: @exercises, status: :ok, each_serializer: ExerciseSerializer
   end
 
+  def destroy
+    @exercise = Exercise.find(params[:id], user_id: @user.id)
+    @exercise.destroy
+    head :no_content
+  end
+
   private
 
   def exercise_params
