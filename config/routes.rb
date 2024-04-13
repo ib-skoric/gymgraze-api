@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post '/authenticate', to: 'authentication#create'
   resources :user, only: [:show, :index, :create]
   get "/profile" => "user#profile"
+  get "/food_summary" => "user#food_summary"
   put "/update_profile" => "user#update"
 
   post '/confirm_email', to: 'user#confirm_email'

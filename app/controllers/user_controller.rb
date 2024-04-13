@@ -3,7 +3,7 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update, :food_summary]
 
   # ----------- RESCUE FROM -------------
   rescue_from AuthenticationError, with: :unauthorized_request
@@ -14,6 +14,26 @@ class UserController < ApplicationController
 
   def profile
     render json: @user, serializer: UserRegistrationSerializer, status: :ok
+  end
+
+  def food_summary
+    kcal = 0
+
+    # get the food diary entry for today
+    food_diary_entry_id = FoodDiaryEntry.find_by(date: Date.today, user_id: @user.id).id
+
+    # find all meals that belong to this entry
+    foods = Food.where(food_diary_entry_id: food_diary_entry_id)
+
+    # find all nutritional infos that belong to the foods
+    nutritional_infos = NutritionalInfo.where(food_id: foods.map(&:id))
+
+    # calculate the total kcal
+    nutritional_infos.each do |nutritional_info|
+      kcal += nutritional_info.kcal
+    end
+
+    render json: { kcal: kcal.to_f }, status: :ok
   end
 
   def create
