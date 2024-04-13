@@ -20,6 +20,12 @@ class ProgressDiaryEntriesController < ApplicationController
     render json: diary_entry, status: :ok, serializer: ProgressDiaryEntrySerializer
   end
 
+  def destroy
+    diary_entry = ProgressDiaryEntry.find_by!(id: params[:id], user_id: @user.id)
+    diary_entry.destroy
+    head :no_content
+  end
+
   private
 
   def diary_entry_params

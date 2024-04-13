@@ -3,5 +3,5 @@ class ProgressDiaryEntry < ApplicationRecord
   validates :date, presence: true, uniqueness: { scope: :user_id }
 
   # ------------ MODEL ASSOCIATIONS --------------- #
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
 end

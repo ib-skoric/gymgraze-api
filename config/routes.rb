@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :exercises, only: [:create, :show, :index]
   resources :workout_diary_entries, only: [:create]
-  resources :workouts, only: [:create, :show]
+  resources :workouts, only: [:create, :show, :destroy]
   resources :foods, only: [:create, :show, :update, :destroy]
   resources :exercise_set, only: [:index, :show, :create]
   resources :goals, only: [:create, :index]
@@ -37,5 +37,5 @@ Rails.application.routes.draw do
   get '/food_diary_entries/:date', to: 'food_diary_entries#fetch_by_date', as: 'food_diary_by_date'
   get '/workout_diary_entries/:date', to: 'workout_diary_entries#fetch_by_date', as: 'workout_diary_by_date'
   get '/progress_diary_entries/:date', to: 'progress_diary_entries#fetch_by_date', as: 'progress_diary_by_date'
-  resources :progress_diary_entries, only: [:create]
+  resources :progress_diary_entries, only: [:create, :destroy]
 end
