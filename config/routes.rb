@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
   resources :food_diary_entries, only: [:index, :create, :update, :destroy]
 
+  resources :trends, only: [:index]
+
   get '/food_diary_entries/:date', to: 'food_diary_entries#fetch_by_date', as: 'food_diary_by_date'
   get '/workout_diary_entries/:date', to: 'workout_diary_entries#fetch_by_date', as: 'workout_diary_by_date'
   get '/progress_diary_entries/:date', to: 'progress_diary_entries#fetch_by_date', as: 'progress_diary_by_date'
