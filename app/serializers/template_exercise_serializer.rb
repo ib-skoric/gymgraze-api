@@ -13,6 +13,8 @@ class TemplateExerciseSerializer < ActiveModel::Serializer
 
     if last_exercise
       exercise_sets = ExerciseSet.where(exercise_id: last_exercise.id)
+    else
+      return
     end
 
     if exercise_sets

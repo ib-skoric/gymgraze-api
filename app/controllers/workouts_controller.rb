@@ -12,6 +12,26 @@ class WorkoutsController < ApplicationController
     end
   end
 
+  def destroy
+    workout = Workout.find_by!(id: params[:id], user_id: @user.id)
+    exercises = Exercise.where(workout_id: workout.id)
+    exercise_sets = ExerciseSet.where(workout_id: workout.id)
+
+    exercises.each do |exercise|
+          exercise.destroy!
+    end
+
+    exercise_sets.each do |exercise_set|
+      exercise_set.destroy!
+    end
+
+    workout.destroy!
+    head :no_content
+
+  rescue ActiveRecord::RecordNotDestroyed
+    render json: { error: 'Failed to destroy workout' }, status: :unprocessable_entity
+  end
+
   def show
     workout = Workout.includes(:exercises, exercises: :exercise_sets).find(params[:id])
     render json: workout, status: :ok, serializer: WorkoutSerializer, include: ['exercises', 'exercises.exercise_sets']
