@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_09_192814) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_13_132157) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -104,13 +104,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_09_192814) do
   create_table "progress_diary_entries", force: :cascade do |t|
     t.date "date"
     t.decimal "weight"
-    t.decimal "hip_measurement"
     t.decimal "arm_measurement"
     t.decimal "waist_measurement"
     t.decimal "chest_measurement"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.float "body_fat_percentage"
     t.index ["user_id"], name: "index_progress_diary_entries_on_user_id"
   end
 
