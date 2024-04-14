@@ -108,7 +108,7 @@ class UserController < ApplicationController
 
   def update
     if @user.update(update_user_params)
-      render json: @user, status: :accepted, serializer: UserRegistrationSerializer
+      render json: @user, status: :accepted, serializer: UserSerializer
     else
       render json: @user.errors, status: :unprocessable_entity
     end
