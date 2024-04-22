@@ -3,7 +3,7 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update, :food_summary]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update, :kcal_summary, :macros_summary]
 
   # ----------- RESCUE FROM -------------
   rescue_from AuthenticationError, with: :unauthorized_request
@@ -20,7 +20,7 @@ class UserController < ApplicationController
     kcal = 0
 
     # get the food diary entry for today
-    food_diary_entry_id = FoodDiaryEntry.find_by(date: Date.today, user_id: @user.id).id
+    food_diary_entry_id = FoodDiaryEntry.find_by(date: date_param, user_id: @user.id).id
 
     # find all meals that belong to this entry
     foods = Food.where(food_diary_entry_id: food_diary_entry_id)
@@ -34,6 +34,30 @@ class UserController < ApplicationController
     end
 
     render json: { kcal: kcal.to_f }, status: :ok
+  end
+
+  def macros_summary
+    protein = 0
+    carbs = 0
+    fat = 0
+
+    # get the food diary entry for today
+    food_diary_entry_id = FoodDiaryEntry.find_by(date: date_param, user_id: @user.id).id
+
+    # find all meals that belong to this entry
+    foods = Food.where(food_diary_entry_id: food_diary_entry_id)
+
+    # find all nutritional infos that belong to the foods
+    nutritional_infos = NutritionalInfo.where(food_id: foods.map(&:id))
+
+    # calculate the total macros
+    nutritional_infos.each do |nutritional_info|
+      protein += (nutritional_info.protein / 100) * foods.find { |food| food.id == nutritional_info.food_id }.amount
+      carbs += (nutritional_info.carbs / 100) * foods.find { |food| food.id == nutritional_info.food_id }.amount
+      fat += (nutritional_info.fat / 100) * foods.find { |food| food.id == nutritional_info.food_id }.amount
+    end
+
+    render json: { protein: protein.to_f, carbs: carbs.to_f, fat: fat.to_f }, status: :ok
   end
 
   def create
@@ -130,5 +154,13 @@ class UserController < ApplicationController
 
   def unauthorized_request
     render json: { error: "Invalid credentials" }, status: :unauthorized
+  end
+
+  def date_param
+    if params[:date].nil?
+      Date.today
+      else
+    params[:date].to_date
+    end
   end
 end
