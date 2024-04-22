@@ -16,7 +16,7 @@ class UserController < ApplicationController
     render json: @user, serializer: UserRegistrationSerializer, status: :ok
   end
 
-  def food_summary
+  def kcal_summary
     kcal = 0
 
     # get the food diary entry for today
