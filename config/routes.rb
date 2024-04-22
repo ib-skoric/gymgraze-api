@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   post '/authenticate', to: 'authentication#create'
   resources :user, only: [:show, :index, :create]
   get "/profile" => "user#profile"
-  get "/food_summary" => "user#food_summary"
+  get "/food_summary" => "user#kcal_summary"
+  get "/macros_summary" => "user#macros_summary"
   put "/update_profile" => "user#update"
 
   post '/confirm_email', to: 'user#confirm_email'
@@ -18,6 +19,8 @@ Rails.application.routes.draw do
   post '/reset_password', to: 'user#reset_password'
 
   post '/check_email_exists', to: 'user#check_email_exists'
+
+  get '/openai', to: 'openai#create'
 
   resources :exercises, only: [:create, :show, :index]
   resources :workout_diary_entries, only: [:create]
