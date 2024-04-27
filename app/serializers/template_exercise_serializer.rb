@@ -1,7 +1,11 @@
 class TemplateExerciseSerializer < ActiveModel::Serializer
-  attributes :id, :name, :exercise_category, :exercise_type_id, :historical_set_rep_data
+  attributes :id, :name, :exercise_category, :exercise_type_id, :timer, :historical_set_rep_data
 
   belongs_to :exercise_type
+
+  def timer
+    object.exercise_type.timer
+  end
 
   def name
     object.exercise_type.name

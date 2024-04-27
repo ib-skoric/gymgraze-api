@@ -1,5 +1,5 @@
 class ExerciseTypeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :exercise_category, :historical_set_rep_data
+  attributes :id, :name, :exercise_category, :timer, :historical_set_rep_data
 
   def historical_set_rep_data
     # find last instance of this exercise type used for exercise

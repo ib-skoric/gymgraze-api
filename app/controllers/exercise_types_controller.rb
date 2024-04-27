@@ -3,9 +3,20 @@ class ExerciseTypesController < ApplicationController
   before_action :authenticate_user
 
   def create
-    @exercise_type = ExerciseType.new(exercise_type_params.merge(user_id: @user.id))
+    params = exercise_type_params
+    params[:timer] = params[:timer].to_i
+    @exercise_type = ExerciseType.new(params.merge(user_id: @user.id))
     if @exercise_type.save
       render json: @exercise_type, status: :created, serializer: ExerciseTypeSerializer
+    else
+      render json: @exercise_type.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @exercise_type = ExerciseType.find(params[:id])
+    if @exercise_type.update(exercise_type_params)
+      render json: @exercise_type, status: :ok, serializer: ExerciseTypeSerializer
     else
       render json: @exercise_type.errors, status: :unprocessable_entity
     end
@@ -17,6 +28,6 @@ class ExerciseTypesController < ApplicationController
   end
 
   private def exercise_type_params
-    params.require(:exercise_type).permit(:name, :exercise_category)
+    params.require(:exercise_type).permit(:name, :exercise_category, :timer)
   end
 end
