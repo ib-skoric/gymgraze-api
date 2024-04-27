@@ -13,6 +13,15 @@ class ExerciseTypesController < ApplicationController
     end
   end
 
+  def update
+    @exercise_type = ExerciseType.find(params[:id])
+    if @exercise_type.update(exercise_type_params)
+      render json: @exercise_type, status: :ok, serializer: ExerciseTypeSerializer
+    else
+      render json: @exercise_type.errors, status: :unprocessable_entity
+    end
+  end
+
   def index
     @exercise_types = ExerciseType.where(user_id: @user.id)
     render json: @exercise_types, status: :ok, each_serializer: ExerciseTypeSerializer
