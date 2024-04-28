@@ -17,6 +17,12 @@ class WorkoutTemplatesController < ApplicationController
     render json: workout_templates, status: :ok, each_serializer: WorkoutTemplateSerializer
   end
 
+  def destroy
+    workout_template = WorkoutTemplate.find(params[:id])
+    workout_template.destroy
+    render json: { message: 'Workout template deleted' }, status: :no_content
+  end
+
   private
 
   def workout_template_params
