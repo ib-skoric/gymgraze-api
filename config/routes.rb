@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   resources :exercise_set, only: [:index, :show, :create]
   resources :goals, only: [:create, :index]
   resources :exercise_types, only: [:create, :index, :update]
-  resources :workout_templates, only: [:create, :index]
+  resources :workout_templates, only: [:create, :index, :destroy]
   resources :meals, only: [:create, :destroy]
 
   post '/update_all_meals', to: 'meals#update_all'
