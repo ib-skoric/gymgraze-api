@@ -11,10 +11,11 @@ RSpec.describe WorkoutDiaryEntriesController, type: :controller do
     describe "POST /workout_diary_entries" do
       it "creates a new workout diary entry" do
         request.headers.merge!(authentication_helper(@user))
-        post "create", params: { workout_diary_entry: { date: Date.today, user_id: @user.id } }
+        date = Date.today + rand(1..99999).days
+        post "create", params: { workout_diary_entry: { date: date, user_id: @user.id } }
 
         expect(response).to have_http_status(201)
-        expect(response.body).to include(Date.today.to_s)
+        expect(response.body).to include(date.to_s)
       end
 
       it "returns an error if the workout diary entry is invalid" do

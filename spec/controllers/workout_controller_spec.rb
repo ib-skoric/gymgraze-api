@@ -5,7 +5,7 @@ require 'authentication_helper'
 describe WorkoutsController, type: :controller do
   before(:all) do
     @user = FactoryBot.build(:jane_doe)
-    @workout_entry = WorkoutDiaryEntry.create!(date: Date.tomorrow + 1.days, user_id: @user.id)
+    @workout_entry = WorkoutDiaryEntry.create!(date: Date.tomorrow + rand(1..999).days, user_id: @user.id)
   end
 
   describe "POST /workouts" do
