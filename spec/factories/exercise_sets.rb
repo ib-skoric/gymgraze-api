@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :exercise_set do
-    reps { 1 }
+    reps { rand(1..99999) }
     weight { "9.99" }
     exercise { FactoryBot.create(:exercise) }
   end
