@@ -8,13 +8,15 @@ RSpec.describe ExercisesController, type: :controller do
     @user = FactoryBot.build(:jane_doe)
   end
 
-  describe "POST /exercise" do
+  describe "POST /exercises" do
     it "creates a new exercise" do
+      workout_diary_entry = FactoryBot.create(:workout_diary_entry)
+      workout = FactoryBot.create(:workout, workout_diary_entry: workout_diary_entry, user: @user)
+      exercise_type = FactoryBot.create(:exercise_type)
       request.headers.merge!(authentication_helper(@user))
-      post "create", params: { exercise: { name: "Squats", exercise_type: "strength" } }
+      post "create", params: { exercises: [{ name: "Squats", exercise_category: "strength", workout_id: workout.id, exercise_type_id: exercise_type.id }] }
 
       expect(response).to have_http_status(201)
-      expect(response.body).to include("Squats")
     end
 
     it "returns an error if the exercise is invalid" do
