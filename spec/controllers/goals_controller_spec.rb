@@ -5,7 +5,7 @@ require 'authentication_helper'
 describe GoalsController, type: :controller do
 
     before(:all) do
-      @user = FactoryBot.create(:jane_doe)
+      @user = FactoryBot.build(:jane_doe)
       @goal = FactoryBot.create(:goal)
     end
 

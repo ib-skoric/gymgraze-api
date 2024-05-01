@@ -4,6 +4,6 @@ FactoryBot.define do
     kcal { 1 }
     exercise { 1 }
     user { FactoryBot.build(:jane_doe) }
-    id { 1 }
+    id { rand(1..99999) }
   end
 end
