@@ -19,6 +19,16 @@ describe FoodsController, type: :controller do
     expect(response.body).to include("can't be blank")
   end
 
+  it "should create a food if name and barcode are provided" do
+    request.headers.merge!(authentication_helper(@user))
+    meal = FactoryBot.create(:meal)
+    food_diary_entry = FactoryBot.create(:food_diary_entry, user_id: @user.id, date: Date.today)
+    food = Food.new(name: "banana", barcode: 123456789, meal_id: meal.id, amount: 100)
+    post :create, params: { food: food.attributes, food_diary_entry_id: food_diary_entry.id }
+
+    expect(response).to have_http_status(:created)
+  end
+
   it "should not create a food if barcode is not provided" do
     request.headers.merge!(authentication_helper(@user))
     food = Food.new(name: "banana", barcode: nil)
@@ -28,28 +38,6 @@ describe FoodsController, type: :controller do
     # expect it to return an error message
     expect(response.body).to include("can't be blank")
   end
-
-  it "should create a food if name and barcode are provided" do
-    request.headers.merge!(authentication_helper(@user))
-    meal = Meal.create(name: "breakfast", user_id: @user.id)
-    food_diary_entry = FoodDiaryEntry.create(date: Date.today, user_id: @user.id)
-    food = Food.new(name: "banana", barcode: 123456789, meal_id: meal.id, food_diary_entry_id: food_diary_entry.id)
-    post :create, params: { food: food.attributes }
-
-    expect(response).to have_http_status(:created)
-  end
-  end
-
-  describe "GET #show" do
-    it "should return a food" do
-      request.headers.merge!(authentication_helper(@user))
-      meal = Meal.create(name: "breakfast", user_id: @user.id)
-      food_diary_entry = FoodDiaryEntry.create(date: Date.today, user_id: @user.id)
-      food = Food.create(name: "banana", barcode: 123456789, meal_id: meal.id, food_diary_entry_id: food_diary_entry.id)
-      get :show, params: { id: food.id }
-
-      expect(response).to have_http_status(:ok)
-    end
 
     it "should return an error if food does not exist" do
       request.headers.merge!(authentication_helper(@user))

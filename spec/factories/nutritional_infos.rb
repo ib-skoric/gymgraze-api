@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :nutritional_info do
-    kcal { "9.99" }
+    kcal { 99 }
     carbs { "9.99" }
     fat { "9.99" }
     protein { "9.99" }
