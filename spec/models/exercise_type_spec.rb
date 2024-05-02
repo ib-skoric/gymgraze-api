@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ExerciseType, type: :model do
+  describe 'it validates presence of required attributes' do
   it 'validates presence of name' do
     exercise_type = ExerciseType.new(name: nil)
     expect(exercise_type).to be_invalid
@@ -9,6 +10,7 @@ RSpec.describe ExerciseType, type: :model do
   it 'validates presence of exercise_category' do
     exercise_type = ExerciseType.new(exercise_category: nil)
     expect(exercise_type).to be_invalid
+  end
   end
 
   it 'validates inclusion of exercise_category' do
