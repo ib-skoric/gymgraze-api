@@ -14,15 +14,6 @@ class MealsController < ApplicationController
     end
   end
 
-  def update
-    @meal = Meal.find(params[:id])
-    if @meal.update(meal_params)
-      render json: @meal, status: :ok, serializer: MealSerializer
-    else
-      render json: @meal.errors, status: :unprocessable_entity
-    end
-  end
-
   def update_all
     params[:meals].each do |meal_param|
       meal = Meal.find(meal_param[:id])
