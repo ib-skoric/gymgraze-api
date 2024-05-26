@@ -9,6 +9,7 @@ class AuthenticationController < ApplicationController
     # check that the request includes email + password
     user_params
 
+    raise AuthenticationError unless user
     raise AuthenticationError unless user.authenticate(params[:password])
 
     # generate token using authentication service
@@ -22,7 +23,6 @@ class AuthenticationController < ApplicationController
 
   def user
     @user ||= User.find_by(email: params[:email])
-    raise AuthenticationError unless @user
   end
 
   # method for strong params when sending user info
@@ -35,7 +35,7 @@ class AuthenticationController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  def unauthorized_request()
+  def unauthorized_request
     render json: { error: "Invalid credentials" }, status: :unauthorized
   end
 end
