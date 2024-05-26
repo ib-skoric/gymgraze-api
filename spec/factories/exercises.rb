@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :exercise do
     name { "MyString" }
-    exercise_type { "strength" }
-    id { 1 }
-    user_id { FactoryBot.create(:jane_doe).id }
+    exercise_type { FactoryBot.create(:exercise_type) }
+    id { rand(1..99999) }
+    user_id { FactoryBot.build(:jane_doe).id }
   end
 end

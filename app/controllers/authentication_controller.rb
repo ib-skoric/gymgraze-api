@@ -22,6 +22,7 @@ class AuthenticationController < ApplicationController
 
   def user
     @user ||= User.find_by(email: params[:email])
+    raise AuthenticationError unless @user
   end
 
   # method for strong params when sending user info

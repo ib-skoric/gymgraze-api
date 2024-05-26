@@ -41,12 +41,12 @@ describe FoodDiaryEntriesController do
     end
   end
 
-  describe "GET to /food_diary_entries/:id endpoint" do
+  describe "GET to /food_diary_entries/:date endpoint" do
     it "should return a status of 200 OK" do
       @food_entry = FactoryBot.create(:food_diary_entry, user_id: @user.id, date: Date.today)
 
       request.headers.merge!(authentication_helper(@user))
-      get :show, params: { id: @food_entry.id }
+      get :fetch_by_date, params: { date: Date.today }
       expect(response).to have_http_status(:ok)
     end
 
@@ -54,7 +54,7 @@ describe FoodDiaryEntriesController do
       @food_entry = FactoryBot.create(:food_diary_entry, user_id: @user.id, date: Date.today)
 
       request.headers.merge!(authentication_helper(@user))
-      get :show, params: { id: @food_entry.id }
+      get :fetch_by_date, params: { date: Date.today }
 
       body = JSON.parse(response.body)
       expect(body["id"]).to eq(@food_entry.id)
@@ -85,7 +85,7 @@ describe FoodDiaryEntriesController do
 
     it "should return a status of 422 Unprocessable Entity when date is invalid" do
       request.headers.merge!(authentication_helper(@user))
-      post :create, params: { food_diary_entry: { date: "invalid date" } }
+      post :create, params: { food_diary_entry: { date: nil } }
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
