@@ -43,6 +43,18 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  # SMTP settings for mailgun
+  config.action_mailer.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'gymgraze-3e55f4cbb92e.herokuapp.com',
+    :authentication => :plain,
+  }
+
+  config.action_mailer.delivery_method = :smtp
+
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
