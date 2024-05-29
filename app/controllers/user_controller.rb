@@ -3,7 +3,7 @@ class UserController < ApplicationController
   # used to get the token from the request header
   include ActionController::HttpAuthentication::Token
 
-  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update, :kcal_summary, :macros_summary]
+  before_action :authenticate_user, only: [:index, :profile, :confirm_email, :resend_confirmation_email, :update, :kcal_summary, :macros_summary, :destroy]
 
   # ----------- RESCUE FROM -------------
   rescue_from AuthenticationError, with: :unauthorized_request
@@ -135,6 +135,14 @@ class UserController < ApplicationController
       render json: @user, status: :accepted, serializer: UserSerializer
     else
       render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @user.destroy!
+    render json: { message: "User deleted" }, status: :accepted
+    else
+      render json: { error: "User could not be deleted" }, status: :unprocessable_entity
     end
   end
 

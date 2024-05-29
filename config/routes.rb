@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   post '/authenticate', to: 'authentication#create'
-  resources :user, only: [:show, :index, :create]
+  resources :user, only: [:show, :index, :create, :destroy]
   get "/profile" => "user#profile"
   get "/food_summary" => "user#kcal_summary"
   get "/macros_summary" => "user#macros_summary"

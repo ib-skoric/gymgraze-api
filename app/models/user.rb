@@ -13,8 +13,15 @@ class User < ApplicationRecord
   validates :height, presence: true, on: :create
 
   # ------------ MODEL ASSOCIATIONS --------------- #
-  has_one :goal
-  has_many :meals
+  has_one :goal, dependent: :destroy
+  has_many :meals, dependent: :destroy
+  has_many :exercise_types, dependent: :destroy
+  has_many :workouts, dependent: :destroy
+  has_many :exercises, dependent: :destroy
+  has_many :workout_templates, dependent: :destroy
+  has_many :food_diary_entries, dependent: :destroy
+  has_many :workout_diary_entries, dependent: :destroy
+  has_many :progress_diary_entries, dependent: :destroy
 
   def is_same_as?(user)
     if self.id == user.id
