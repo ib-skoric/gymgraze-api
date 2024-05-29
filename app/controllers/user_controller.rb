@@ -139,6 +139,9 @@ class UserController < ApplicationController
   end
 
   def destroy
+    # destroy their goal first
+    goal = Goal.find_by(user_id: @user.id)
+    goal.destroy! if goal
     if @user.destroy!
     render json: { message: "User deleted" }, status: :accepted
     else
